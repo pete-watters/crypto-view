@@ -1,164 +1,23 @@
 import React from 'react';
-
-const OrderBook = () => 
-  <aside className="orderbook-container">
+import PropTypes from 'prop-types';
+// This seems a bit pointless now
+// should change this to contain the aside
+// compose it of two lists and fair trade section in center
+// pass the li's to list as children
+const OrderBook = ({ children }) => 
   <ul>
-    <li>
-      <span style={{color: "red"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "red"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "red"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "red"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "red"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
+  { children }
+  </ul>;
 
-    <li>
-      <span style={{color: "red"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "red"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.079</span>
-    </li>
-    <li>
-      <span style={{color: "red"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "red"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "red"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
+OrderBook.propTypes = {
+  children: PropTypes.array.isRequired,
+  error: PropTypes.bool,
+  loading: PropTypes.bool,
+};
 
-    <li>
-      <span style={{color: "red"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "red"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "red"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "red"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "red"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-  </ul>
-  <div>3638.5 USD</div>
-  <ul>
-    <li>
-      <span style={{color: "green"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "green"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "green"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "green"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "green"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "green"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "green"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "green"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "green"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "green"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "green"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "green"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "green"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "green"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-    <li>
-      <span style={{color: "green"}}>3643.9</span>
-      <span>5.500</span>
-      <span>135.479</span>
-    </li>
-  </ul>
-  </aside>;
+OrderBook.defaultProps = {
+  error: false,
+  loading: null,
+};
 
 export default OrderBook;

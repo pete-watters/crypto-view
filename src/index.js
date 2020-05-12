@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import OrderbookWorker from 'worker-loader!./orderbook/worker';
 import './styles.scss';
-import { mapOrderBookData, sort } from './tools/format';
+import { sanitiseOrderBook, mapCumulativeVolume, sort, sumFloats } from './tools/format';
 import { mockOrderbook } from '../test/mock';
-// import OrderBook from './features/orderbook/OrderBook';
-// import DepthChart from './features/depth-chart/DepthChart';
+import OrderBook from './features/orderbook/OrderBook';
+import DepthChart from './features/depth-chart/DepthChart';
 
 class App extends React.Component {
 	constructor (props) {
@@ -36,10 +36,22 @@ class App extends React.Component {
       // this.setState({ orderBook: { asks: e.data.asks, bids: e.data.bids }});
       };
     }
-
+    // investigate this for optimal worker sorting
+    //https://medium.com/prolanceer/optimizing-react-app-performance-using-web-workers-79266afd4a7
+    //https://github.com/rohanBagchi/react-webworker-demo/tree/master/src
     const { orderBook } = mockOrderbook;    
-    const asks = mapOrderBookData(orderBook.asks, 0).sort(sort);
-    const bids = mapOrderBookData(orderBook.bids, 0);
+    const cleanAsks = sanitiseOrderBook(orderBook.asks).sort(sort);
+    const totalVolumeAsks = cleanAsks.map(item => item[1]).reduce((a,b) => sumFloats(a,b));
+
+    console.log('totalVolumeAsks', totalVolumeAsks);
+    const cleanBids = sanitiseOrderBook(orderBook.bids);
+    console.log('cleanAsks',cleanAsks);
+    console.log('cleanBids',cleanBids);
+    const asks = mapCumulativeVolume(cleanAsks, 'ask', totalVolumeAsks );
+    const bids = mapCumulativeVolume(cleanBids, 'bid', 0 );
+    console.log('asks',asks);
+    console.log('bids',bids);
+    
     this.setState({orderBook: { asks, bids }});
   }
   // componentWillUnmount(){
@@ -49,6 +61,7 @@ class App extends React.Component {
 
   render() {
     const { orderBook } = this.state;
+    // TODO add error Boundary + loading
     return (
       <>
       <header>
@@ -60,18 +73,29 @@ class App extends React.Component {
         <h1>Crypto View</h1>
       </header>
       <section className="page-container">
-        {/* <DepthChart /> */}
-        <ul>
-        {orderBook && orderBook.asks.map((ask, index) => 
-          <li key={index+1}>{ask[0]} {ask[1]} {ask[2]}</li>
-        )}
-        </ul>
-        {/* <OrderBook /> */}
-        <ul>
-        {orderBook && orderBook.bids.map((bid, index) => 
-          <li key={index+1}>{bid[0]} {bid[1]} {bid[2]}</li>
-        )}
-        </ul>
+        <DepthChart />
+        
+      <aside className="orderbook-container">
+        {/* CHECK think I have bids and asks backwards! */}
+          <OrderBook>
+            {orderBook && orderBook.asks.map(([price, [integral, decimal], [cumulativeIntegral, cumulativeDecimal]], index) => 
+              <li key={index+1}>
+                <span style={{color: "red"}}>{price} </span>
+                <span>{integral}.<em>{decimal}</em></span>
+                <span>{cumulativeIntegral}.<em>{cumulativeDecimal}</em></span>
+              </li>
+            )}
+            </OrderBook>
+            <OrderBook>
+            {orderBook && orderBook.bids.map(([price, [integral, decimal], [cumulativeIntegral, cumulativeDecimal]], index) => 
+              <li key={index+1}>
+                <span style={{color: "green"}}>{price}</span>
+                <span>{integral}.<em>{decimal}</em></span>
+                <span>{cumulativeIntegral}.<em>{cumulativeDecimal}</em></span>
+              </li>
+            )}
+            </OrderBook>
+      </aside>
       </section>
       </>
     );

@@ -46,9 +46,6 @@ header{
   }
 }
 
-header.logo{
-}
-
 header h1{
   grid-area: heading;
 }
@@ -71,12 +68,11 @@ header h1{
 
 .orderbook-container{
   ul {
-    list-style: none;
-    padding: 0;
     li{
-      span {
-        margin: 0 0.5rem;
-      }
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-column-gap: 2rem;
+      text-align: right;
     }
   }
 }
