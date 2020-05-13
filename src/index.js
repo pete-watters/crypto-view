@@ -2,9 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import OrderbookWorker from 'worker-loader!./orderbook/worker';
 import './styles.scss';
+import Header from './components/Header';
 import { sanitiseOrderBook, mapCumulativeVolume, sort, sumFloats } from './tools/format';
 import { mockOrderbook } from '../test/mock';
-import OrderBook from './features/orderbook/OrderBook';
+import { OrderBook, OrderBookList, OrderBookMarketPrice } from './features/orderbook/';
+import { CRYPTO_VIEW } from './constants';
 import DepthChart from './features/depth-chart/DepthChart';
 
 class App extends React.Component {
@@ -60,42 +62,20 @@ class App extends React.Component {
   // }
 
   render() {
-    const { orderBook } = this.state;
+    const { orderBook: { bids, asks } } = this.state;
     // TODO add error Boundary + loading
     return (
       <>
-      <header>
-        <div className="logo">
-        <svg viewBox="0 0 200 200">
-          <path d="M65.9 100.2c0 13.1 3.6 23.6 10.7 31.4 6.7 7.1 15.9 10.7 30.2 10.7 10.9 0 19-1.7 25.4-5.2v-16.4c-8.6 3.8-16.9 6-25 6-15.9 0-23.3-8.3-23.3-26.4 0-18.3 7.8-27.1 24-27.1 5.5 0 12.1 1.7 20 5l6.7-15.2c-8.1-3.8-17.1-5.7-27.1-5.7-12.6 0-22.8 3.6-30.7 11.4-7.1 7-10.9 17.5-10.9 31.5zM10 190h180V10H10v180zM0 200V0h200v200H0z"></path>
-        </svg>
-        </div>
-        <h1>Crypto View</h1>
-      </header>
+      <Header />
       <section className="page-container">
         <DepthChart />
         
-      <aside className="orderbook-container">
+      <OrderBook>
         {/* CHECK think I have bids and asks backwards! */}
-          <OrderBook>
-            {orderBook && orderBook.asks.map(([price, [integral, decimal], [cumulativeIntegral, cumulativeDecimal]], index) => 
-              <li key={index+1}>
-                <span style={{color: "red"}}>{price} </span>
-                <span>{integral}.<em>{decimal}</em></span>
-                <span>{cumulativeIntegral}.<em>{cumulativeDecimal}</em></span>
-              </li>
-            )}
-            </OrderBook>
-            <OrderBook>
-            {orderBook && orderBook.bids.map(([price, [integral, decimal], [cumulativeIntegral, cumulativeDecimal]], index) => 
-              <li key={index+1}>
-                <span style={{color: "green"}}>{price}</span>
-                <span>{integral}.<em>{decimal}</em></span>
-                <span>{cumulativeIntegral}.<em>{cumulativeDecimal}</em></span>
-              </li>
-            )}
-            </OrderBook>
-      </aside>
+          <OrderBookList type={CRYPTO_VIEW.ORDER_TYPES.ASK} data={asks} />
+          <OrderBookMarketPrice price={`1,000 ${CRYPTO_VIEW.CURRENCY}`} />
+          <OrderBookList type={CRYPTO_VIEW.ORDER_TYPES.BID} data={bids} />
+      </OrderBook>
       </section>
       </>
     );

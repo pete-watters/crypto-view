@@ -1,13 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// This seems a bit pointless now
-// should change this to contain the aside
-// compose it of two lists and fair trade section in center
-// pass the li's to list as children
-const OrderBook = ({ children }) => 
-  <ul>
-  { children }
-  </ul>;
+
+const OrderBook = ({ children }) =>
+  <aside className="orderbook-container">
+    {children}
+  </aside>;
 
 OrderBook.propTypes = {
   children: PropTypes.array.isRequired,
