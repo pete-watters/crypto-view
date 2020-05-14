@@ -67,13 +67,15 @@ header h1{
 }
 
 .orderbook-container{
+  .bid-list .price{
+    color: #00B909;
+
+  }
+  .ask-list .price{
+    color: #C60606;
+  }
+
   ul {
-    .orderbook-price-ask{
-      color: #C60606;
-    }
-    .orderbook-price-bid{
-      color: #00B909;
-    }
     li{
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;

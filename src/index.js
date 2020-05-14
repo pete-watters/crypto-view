@@ -62,20 +62,15 @@ class App extends React.Component {
   // }
 
   render() {
-    const { orderBook: { bids, asks } } = this.state;
+    // const { orderBook: { bids, asks } } = this.state;
+    const { orderBook } = this.state;
     // TODO add error Boundary + loading
     return (
       <>
       <Header />
       <section className="page-container">
-        <DepthChart />
-        
-      <OrderBook>
-        {/* CHECK think I have bids and asks backwards! */}
-          <OrderBookList type={CRYPTO_VIEW.ORDER_TYPES.ASK} data={asks} />
-          <OrderBookMarketPrice price={`1,000 ${CRYPTO_VIEW.CURRENCY}`} />
-          <OrderBookList type={CRYPTO_VIEW.ORDER_TYPES.BID} data={bids} />
-      </OrderBook>
+       <DepthChart />
+       <OrderBook data={orderBook} />
       </section>
       </>
     );
