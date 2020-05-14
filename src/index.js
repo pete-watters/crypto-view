@@ -66,13 +66,12 @@ class App extends React.Component {
     const { orderBook } = this.state;
     // TODO add error Boundary + loading
     return (
-      <>
+      <section className="crypto-view">
       <Header />
-      <section className="page-container">
        <DepthChart />
        <OrderBook data={orderBook} />
+       <footer>Copyright....</footer>
       </section>
-      </>
     );
   }
 }

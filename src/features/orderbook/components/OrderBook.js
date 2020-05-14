@@ -44,7 +44,6 @@ class OrderBook extends Component {
   
 OrderBook.propTypes = {
   data: PropTypes.object.isRequired,
-  children: PropTypes.array.isRequired,
   error: PropTypes.bool,
   loading: PropTypes.bool,
 };
