@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import OrderbookWorker from 'worker-loader!./orderbook/worker';
-import './styles.scss';
+import './styles/main.scss';
 import Header from './components/Header';
 import { sanitiseOrderBook, mapCumulativeVolume, sort, sumFloats } from './tools/format';
 import { mockOrderbook } from '../test/mock';
-import { OrderBook, OrderBookList, OrderBookMarketPrice } from './features/orderbook/';
-import { CRYPTO_VIEW } from './constants';
+import { OrderBook } from './features/orderbook/';
 import DepthChart from './features/depth-chart/DepthChart';
 
 class App extends React.Component {
@@ -66,12 +65,11 @@ class App extends React.Component {
     const { orderBook } = this.state;
     // TODO add error Boundary + loading
     return (
-      <section className="crypto-view">
+      <>
       <Header />
-       <DepthChart />
-       <OrderBook data={orderBook} />
-       <footer>Copyright....</footer>
-      </section>
+      <DepthChart />
+      <OrderBook data={orderBook} />
+      </>
     );
   }
 }

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 // pass the li's to list as children
 const OrderBookMarketPrice = ({ price }) =>
   <article className="orderbook-fairmarket-price">
-    {price}
+    <h3>{price}</h3>
   </article>;
 
 OrderBookMarketPrice.propTypes = {

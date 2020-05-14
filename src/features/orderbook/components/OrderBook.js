@@ -22,9 +22,9 @@ class OrderBook extends Component {
     console.log(highlightRow);
 
     return(
-      <aside className="orderbook-container">
+      <aside className="orderbook">
       {/* CHECK think I have bids and asks backwards! */}
-      <h1>Selected Price: $40404040</h1>
+      <h2>Selected Price: $40404040</h2>
       <OrderBookList
         type={CRYPTO_VIEW.ORDER_TYPES.ASK}
         data={asks}
