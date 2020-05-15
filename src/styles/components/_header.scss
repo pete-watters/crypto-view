@@ -1,0 +1,16 @@
+header{
+  grid-area: header;
+  padding: 1rem;
+  background-color: $mine-shaft;
+  figure {
+    display: flex;
+    svg{
+      height: 50px;
+      width: 50px;
+      fill: $white;
+    }
+    h1 {
+      margin: 0.5rem 1.25rem;
+    }
+  }
+}

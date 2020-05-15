@@ -1,0 +1,24 @@
+.orderbook{
+  margin: 0.5rem;
+  grid-area: orderbook;
+  .bid-list .price{
+    color: $green;
+  }
+  .ask-list .price{
+    color: $milano-red;
+  }
+
+  ul {
+    li{
+      display: grid;
+      grid-template-columns: 6rem 6rem 6rem;
+      grid-column-gap: 1rem;
+      text-align: right;
+      &.hover{
+        cursor: pointer;
+        background-color: $mine-shaft;
+        opacity: 0.7;
+      }
+    }
+  }
+}
