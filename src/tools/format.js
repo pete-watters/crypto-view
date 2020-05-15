@@ -1,31 +1,10 @@
-// export const convertExpToNumerical = number => {
-//   if (number) {
-//     const data = String(number).split(/[eE]/);
-//     if (data.length == 1) return data[0];
-//     var z = '',
-//       sign = number < 0 ? '-' : '',
-//       str = data[0].replace('.', ''),
-//       mag = Number(data[1]) + 1;
-
-//     if (mag < 0) {
-//       z = sign + '0.';
-//       while (mag++) z += '0';
-//       return z + str.replace(/^-/, '');
-//     }
-//     mag -= str.length;
-//     while (mag--) z += '0';
-//     return str + z;
-//   }
-//   return number;
-// };
-
 const convertExpToNumerical = exponentialInput => {
   const [leadDigit,decimal,power] = exponentialInput.toString().split(/[eE]|\./);
   const expPower = +power.substring(0,2);
   const positiveExponential = expPower >= 0;
   return positiveExponential ? Number(leadDigit + (decimal.slice(0,+expPower)+'.'+decimal.slice(+expPower))) : 0;
 }
-
+// rename this as a generic util
 export const sanitisePriceData = input => {
   switch(typeof input) {
     case 'number':
@@ -39,23 +18,23 @@ export const sanitisePriceData = input => {
   }
 }
 
-// export const getCumulativeVolume = (volume, totalVolume) => 
-//   (volume*1000 + totalVolume*1000) / 1000;
 export const sumFloats = (a, b) => (a*1000 + b*1000) / 1000;
 export const subtractFloats = (a, b) => (b*1000 - a*1000) / 1000;
-export const sort = (a, b) => {
-  // FIXME - change this to accept index
-  const a0 = a[0];
-  const b0 = b[0];
-  return a0 !== b0 ? b0 - a0: 0;
 
-}
+// Add a test for this
+export const sortByColumn = (array, columnIndex) => 
+// Split this out to a sort function
+  array.sort((a, b) => {
+    a = a[columnIndex]
+    b = b[columnIndex]
+    return (a === b) ? 0 : (a > b) ? -1 : 1
+  });
+
 
 export const formatVolume = volume => 
   String(volume).split('.').map(([integral, decimal]) => `${integral}.<em>${decimal}</em>`);
 
-export const sanitiseOrderBook = orderBook => orderBook
-.map(([price, volume]) =>
+export const sanitiseOrderBook = orderBook => orderBook.map(([price, volume]) =>
   [(Number(sanitisePriceData(price))).toFixed(1), (Number(volume)).toFixed(3)]
 );
 

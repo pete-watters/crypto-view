@@ -11,16 +11,22 @@ class ListItem extends PureComponent {
       const { updateHoverState} = this.props;
       updateHoverState('');
   };
+  onClick = () => {
+    const { price, selectPrice } = this.props;
+    selectPrice(price);
+  }
 
   render(){
     const { price, volume, cumulativeVolume, highlightRow } = this.props;
     const [integral, decimal] = volume;
     const [cumulativeIntegral, cumulativeDecimal] = cumulativeVolume;    
-
+    // TODO this could be more generic I guess? 
+    // abstract logic for this specific case and refactor to be a generic li item
     return (
     <li
       onMouseEnter={this.onMouseEnter}
       onMouseLeave={this.onMouseLeave}
+      onClick={this.onClick}
       className={highlightRow ? 'hover' : ''}
     >
         <span className='price'>{price}</span>
@@ -39,6 +45,7 @@ ListItem.propTypes = {
   volume: PropTypes.array.isRequired,
   cumulativeVolume: PropTypes.array.isRequired,
   updateHoverState: PropTypes.func.isRequired,
+  selectPrice: PropTypes.func.isRequired,
 };
 
 ListItem.defaultProps = {
