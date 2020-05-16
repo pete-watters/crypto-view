@@ -38,7 +38,8 @@ class App extends React.Component {
         const totalVolumeAsks = cleanAsks.map(item => item[1]).reduce((a,b) => sumFloats(a,b));
         const asks = mapCumulativeVolume(sortedAsks, 'ask', totalVolumeAsks );
         const bids = mapCumulativeVolume(sortedBids, 'bid', 0 );
-        const randomLastOrder = (ask, bid) => {
+        
+        const getRandomLastOrder = (ask, bid) => {
           const type = Math.round(Math.random()) === 1
           ? ['ask', ask]
           : ['bid', bid];
@@ -46,7 +47,9 @@ class App extends React.Component {
 
         };
         const currentTime =  new Date().toLocaleTimeString();
-        const latestTrade = [ ...randomLastOrder(bids[0][0],asks[asks.length-1][0]), Number(Math.random()).toPrecision(8), currentTime];
+        const randomLastOrder = getRandomLastOrder(bids[0][0],asks[asks.length-1][0]);
+        const latestTrade = [ ...randomLastOrder, Number(Math.random()).toFixed(8), currentTime];
+        // could be a selector
         const tradeList = this.state.latestTrades.length <= 5 ? this.state.latestTrades: [];
         this.setState({
             orderBook: { asks, bids }, 
@@ -64,7 +67,14 @@ class App extends React.Component {
 
   render() {
     const { currentTime, latestTradePrice, orderBook, latestTrades } = this.state;
-    // TODO add error Boundary + loading
+    // TODOs
+    // refactor clean
+    // add unit tests
+    // add new static component for UL and LI tables
+    // add a HOC for article elements
+    // rename components - no need to repeat OrderBook X etc.
+    // add error Boundary + loading
+    // add a basic depth chart
     return (
       <>
       <Header />
@@ -76,13 +86,12 @@ class App extends React.Component {
       </article>
       <article>
         <ul>    
-        {latestTrades && latestTrades.map((latestTrade, index) => {
-          // debugger;
+        {latestTrades && latestTrades.map(([type, price, volume, time], index) => {
           return(
-            <li key={`${index}-${latestTrade[3]}`}>
-              <span className={latestTrade[0]}>{latestTrade[1]}</span>
-              <span>{latestTrade[2]}</span>
-              <span>{latestTrade[3]}</span>
+            <li key={`${index}-${time}`}>
+              <span className={type}>{price}</span>
+              <span>{volume}</span>
+              <span>{time}</span>
             </li>);
         }
         )
