@@ -38,9 +38,9 @@ class App extends React.Component {
       };
     }
   }
-  componentWillUnmount(){
-    window.Worker.terminate();
-  }
+  // componentWillUnmount(){
+  //   window.Worker.terminate();
+  // }
 
   render() {
     const { orderBook } = this.state;

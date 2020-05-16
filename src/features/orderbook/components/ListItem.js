@@ -18,6 +18,7 @@ class ListItem extends PureComponent {
 
   render(){
     const { price, volume, cumulativeVolume, highlightRow } = this.props;
+    const [ matched, unique ] = price;
     const [integral, decimal] = volume;
     const [cumulativeIntegral, cumulativeDecimal] = cumulativeVolume;    
     // TODO this could be more generic I guess? 
@@ -27,9 +28,9 @@ class ListItem extends PureComponent {
       onMouseEnter={this.onMouseEnter}
       onMouseLeave={this.onMouseLeave}
       onClick={this.onClick}
-      className={highlightRow ? 'hover' : ''}
+      className={highlightRow && 'hover'}
     >
-        <span className='price'>{price}</span>
+        <span className='price'><em>{matched}</em>{unique}</span>
         <span>{integral}.<em>{decimal}</em></span>
         <span>{cumulativeIntegral}.<em>{cumulativeDecimal}</em></span>
     </li>);
@@ -41,7 +42,7 @@ ListItem.propTypes = {
   rowNumber: PropTypes.string.isRequired,
   highlightRow: PropTypes.bool,
   type: PropTypes.string.isRequired,
-  price: PropTypes.string.isRequired,
+  price: PropTypes.array.isRequired,
   volume: PropTypes.array.isRequired,
   cumulativeVolume: PropTypes.array.isRequired,
   updateHoverState: PropTypes.func.isRequired,

@@ -1,3 +1,8 @@
+// TODO 
+// need to revisit the data manipulation and remove ineffeciencies
+// have nearly all the logic in place, onlt thing is to show fair market price
+// need to remove the inefficient looping though, double map etc. 
+
 const convertExpToNumerical = exponentialInput => {
   const [leadDigit,decimal,power] = exponentialInput.toString().split(/[eE]|\./);
   const expPower = +power.substring(0,2);
@@ -30,10 +35,6 @@ export const sortByColumn = (array, columnIndex) =>
     return (a === b) ? 0 : (a > b) ? -1 : 1
   });
 
-
-export const formatVolume = volume => 
-  String(volume).split('.').map(([integral, decimal]) => `${integral}.<em>${decimal}</em>`);
-
 export const sanitiseOrderBook = orderBook => orderBook.map(([price, volume]) =>
   [(Number(sanitisePriceData(price))).toFixed(1), (Number(volume)).toFixed(3)]
 );
@@ -45,6 +46,24 @@ export const mapCumulativeVolume = (orderBook, type, cumulativeVolume) => orderB
     : index === 0 //FIXME move this to it's own method
       ? cumulativeVolume
       : subtractFloats(array[index-1][1], cumulativeVolume);
-      // WORKING but dirty - I need to subtract the previous volume from the total, not the current
-    return [price, String(volume).split('.'), String((Number(cumulativeVolume)).toFixed(3)).split('.')];
+  
+  // WORKING but dirty      
+  const formattedPrice = index > 0 
+    ? findMatchingSubstring(price,  array[index-1][0])
+    : ["", price];
+    return [formattedPrice, String(volume).split('.'), String((Number(cumulativeVolume)).toFixed(3)).split('.')];
 });
+
+const findMatchingSubstring = (price, previousPrice) => {
+  let matched_digits = "";
+  const offset = price.length - previousPrice.length;
+  
+  for(let i = 0; i < price.length; i++){
+    if(price[i+offset] === previousPrice[i]){
+      matched_digits += previousPrice[i];
+    } else{
+      break;
+    }
+  }
+ return[ matched_digits, price.replace(matched_digits, "")];
+}
