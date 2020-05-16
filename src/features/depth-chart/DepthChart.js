@@ -30,9 +30,9 @@ const DepthChart = () => {
 	// };
 
   return(
-  <article className="depth-chart">
+  <section className="depth-chart">
     <canvas id="depth" width="40rem" height="30rem"></canvas>
-  </article>
+  </section>
   );
 }
   

@@ -1,13 +1,6 @@
 .orderbook{
   margin: 0.5rem;
   grid-area: orderbook;
-  .bid-list .price{
-    color: $green;
-  }
-  .ask-list .price{
-    color: $milano-red;
-  }
-
   ul {
     li{
       display: grid;

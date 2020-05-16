@@ -12,7 +12,7 @@ render(){
   
   return (
     <>
-    <ul className={`${type}-list`}>
+    <ul>
       {data.map(([price, volume, cumulativeVolume], index) => 
       <ListItem
           key={index+1}

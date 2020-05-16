@@ -22,11 +22,12 @@ class OrderBook extends Component {
   }
 
   render(){
-    const { data: { bids, asks } } = this.props;
+    const { data: { bids, asks }, latestTradePrice } = this.props;
     const { highlightRow, selectedPrice } = this.state;
+    const fairMarketPrice = `${latestTradePrice} ${CRYPTO_VIEW.CURRENCY}`;
 
     return(
-      <aside className="orderbook">
+      <>
       {/* CHECK think I have bids and asks backwards! */}
       {selectedPrice && <h2>{selectedPrice} {CRYPTO_VIEW.CURRENCY}</h2>}
       <OrderBookList
@@ -36,7 +37,7 @@ class OrderBook extends Component {
         selectPrice={this.selectPrice}
         highlightRow={highlightRow}
       />
-      <OrderBookMarketPrice price={`1,000 ${CRYPTO_VIEW.CURRENCY}`} />
+      <OrderBookMarketPrice price={fairMarketPrice} />
       <OrderBookList
         type={CRYPTO_VIEW.ORDER_TYPES.BID}
         data={bids}
@@ -44,17 +45,19 @@ class OrderBook extends Component {
         selectPrice={this.selectPrice}
         highlightRow={highlightRow}
       />
-      </aside>);
+      </>);
   }
 }
   
 OrderBook.propTypes = {
   data: PropTypes.object.isRequired,
+  latestTradePrice: PropTypes.string,
   error: PropTypes.bool,
   loading: PropTypes.bool,
 };
 
 OrderBook.defaultProps = {
+  latestTradePrice: '',
   error: false,
   loading: null,
 };
