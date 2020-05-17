@@ -1,40 +1,42 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { hover } from '../../../styles/_variables.scss';
-
+// FIXME rename this now it's not a list item, actuall more a grid row
 class ListItem extends PureComponent {
   onMouseEnter = () => {
-    const { rowNumber, updateHoverState} = this.props;
+    const { rowNumber, updateHoverState } = this.props;
     updateHoverState(rowNumber);
   };
 
   onMouseLeave = () => {
-      const { updateHoverState} = this.props;
-      updateHoverState('');
+    const { updateHoverState } = this.props;
+    updateHoverState('');
   };
+
   onClick = () => {
     const { price, selectPrice } = this.props;
     selectPrice(price);
   }
 
-  render(){
+  render() {
     const { price, volume, cumulativeVolume, highlightRow, type } = this.props;
-    const [ matched, unique ] = price;
+    const [matched, unique] = price;
     const [integral, decimal] = volume;
-    const [cumulativeIntegral, cumulativeDecimal] = cumulativeVolume;    
-    // TODO this could be more generic I guess? 
-    // abstract logic for this specific case and refactor to be a generic li item
+    const [cumulativeIntegral, cumulativeDecimal] = cumulativeVolume;
     return (
-    <li
-      onMouseEnter={this.onMouseEnter}
-      onMouseLeave={this.onMouseLeave}
-      onClick={this.onClick}
-      className={highlightRow ? hover : ''}
-    >
+      <div
+        onMouseEnter={this.onMouseEnter}
+        onMouseLeave={this.onMouseLeave}
+        onClick={this.onClick}
+        onKeyPress={this.onClick}
+        className={highlightRow ? hover : ''}
+        role="button"
+        tabIndex={0}
+      >
         <span className={type}><em>{matched}</em>{unique}</span>
         <span>{integral}.<em>{decimal}</em></span>
         <span>{cumulativeIntegral}.<em>{cumulativeDecimal}</em></span>
-    </li>);
+      </div>);
   }
 }
 
@@ -51,6 +53,6 @@ ListItem.propTypes = {
 
 ListItem.defaultProps = {
   highlightRow: null,
-}
+};
 
 export default ListItem;

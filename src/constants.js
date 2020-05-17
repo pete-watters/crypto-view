@@ -1,6 +1,6 @@
 export const CRYPTO_VIEW = {
   COPY: {
-    LOGO: 'Crypto View'
+    LOGO: 'Crypto View',
   },
   CURRENCY: 'USD',
-}
+};
