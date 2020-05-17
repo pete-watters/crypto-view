@@ -6,7 +6,9 @@ import OrderbookWorker from 'worker-loader!./orderbook/worker';
 import './styles/main.scss';
 import { ask, bid } from './styles/_variables.scss';
 import { Header } from './components/Header';
-import { sanitiseOrderBook, mapCumulativeVolume, sortByColumn, sumFloats } from './tools/format';
+import { sanitiseOrderBook, mapCumulativeVolume } from './features/orderbook/helpers';
+import { sortByColumn } from './tools/sort';
+import { sumFloats } from './tools/sum';
 import OrderBook from './features/orderbook';
 import DepthChart from './features/depth-chart/DepthChart';
 
@@ -95,7 +97,7 @@ class App extends React.Component {
           <article>
             <ul>
               {latestTrades && latestTrades.map(([type, price, volume, time]) => (
-                <li key={time}>
+                <li key={`${time}-${volume}`}>
                   <div>
                     <span className={type}>{price}</span>
                     <span>{volume}</span>

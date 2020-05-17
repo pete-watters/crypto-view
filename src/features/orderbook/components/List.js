@@ -14,9 +14,8 @@ class List extends PureComponent {
       <>
         <ul>
           {data.map(([price, volume, cumulativeVolume], index) =>
-            <li>
+            <li key={`${price}-${volume}`}>
               <ListItem
-                key={`${price}-${volume}`}
                 price={price}
                 type={type}
                 volume={volume}
