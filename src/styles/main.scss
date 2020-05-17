@@ -2,14 +2,15 @@
 @import './base/colors';
 @import './base/typography';
 @import './base/breakpoints';
+@import './_variables';
 @import './components/header';
 @import './features/depth-chart/index';
 @import './features/orderbook/index';
 
+
 html, body {
   background-color: $heavy-metal;
 }
-
 
 #app {
   height: 100%;
@@ -25,10 +26,10 @@ html, body {
   //     background-color: red;
   // }
 }
-  // TODO double check I am using correct bid / ask
-  .bid{
+
+  .#{$bid}{
     color: $green;
   }
-  .ask{
+  .#{$ask}{
     color: $milano-red;
   }

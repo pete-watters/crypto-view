@@ -1,14 +1,15 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ListItem from './ListItem';
+import { ask } from '../../../styles/_variables.scss';
 
-class OrderBookList extends PureComponent {
+class List extends PureComponent {
   
 render(){
   const { type, data, updateHoverState, highlightRow, selectPrice } = this.props;
 
   const getRowNumber = (type, index) => 
-    type === 'ask' ? `${index+1}` : `${data.length - index}`;
+    type === ask ? `${index+1}` : `${data.length - index}`;
   
   return (
     <>
@@ -31,7 +32,7 @@ render(){
 }
   
 
-OrderBookList.propTypes = {
+List.propTypes = {
   type: PropTypes.string.isRequired,
   data: PropTypes.array.isRequired,
   updateHoverState: PropTypes.func.isRequired,
@@ -39,8 +40,8 @@ OrderBookList.propTypes = {
   highlightRow: PropTypes.string,
 };
 
-OrderBookList.defaultProps = {
+List.defaultProps = {
   highlightRow: null,
 }
 
-export default OrderBookList;
+export default List;

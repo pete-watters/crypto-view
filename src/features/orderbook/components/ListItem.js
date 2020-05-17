@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { hover } from '../../../styles/_variables.scss';
 
 class ListItem extends PureComponent {
   onMouseEnter = () => {
@@ -28,7 +29,7 @@ class ListItem extends PureComponent {
       onMouseEnter={this.onMouseEnter}
       onMouseLeave={this.onMouseLeave}
       onClick={this.onClick}
-      className={highlightRow ? 'hover' : ''}
+      className={highlightRow ? hover : ''}
     >
         <span className={type}><em>{matched}</em>{unique}</span>
         <span>{integral}.<em>{decimal}</em></span>
@@ -36,9 +37,6 @@ class ListItem extends PureComponent {
     </li>);
   }
 }
- 
-  //TODO store these class names in SASS variables and import 
-  // https://til.hashrocket.com/posts/sxbrscjuqu-share-scss-variables-with-javascript
 
 ListItem.propTypes = {
   rowNumber: PropTypes.string.isRequired,

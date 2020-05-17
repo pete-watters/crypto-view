@@ -3,8 +3,4 @@ export const CRYPTO_VIEW = {
     LOGO: 'Crypto View'
   },
   CURRENCY: 'USD',
-  ORDER_TYPES: {
-    ASK: 'ask',
-    BID: 'bid'
-  }
 }
