@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { CRYPTO_VIEW } from 'constants';
+import { bid, ask } from 'styles/_variables.scss';
 import List from './components/List';
 import MarketPrice from './components/MarketPrice';
-import { CRYPTO_VIEW } from '../../constants';
-import { bid, ask } from '../../styles/_variables.scss';
 
 class OrderBook extends Component {
   constructor() {

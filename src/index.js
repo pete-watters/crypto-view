@@ -3,14 +3,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import OrderbookWorker from 'worker-loader!./orderbook/worker';
-import './styles/main.scss';
-import { ask, bid } from './styles/_variables.scss';
-import { Header } from './components/Header';
-import { sanitiseOrderBook, mapCumulativeVolume } from './features/orderbook/helpers';
-import { sortByColumn } from './tools/sort';
-import { sumFloats } from './tools/sum';
-import OrderBook from './features/orderbook';
-import DepthChart from './features/depth-chart/DepthChart';
+import 'styles/main.scss';
+import { ask, bid } from 'styles/_variables.scss';
+import { Header } from 'components/Header';
+import { sanitiseOrderBook, mapCumulativeVolume } from 'features/orderbook/helpers';
+import { sortByColumn } from 'tools/sort';
+import { sumFloats } from 'tools/sum';
+import OrderBook from 'features/orderbook';
+import DepthChart from 'features/depth-chart/DepthChart';
 
 class App extends React.Component {
   constructor(props) {

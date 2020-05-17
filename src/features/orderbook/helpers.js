@@ -1,7 +1,7 @@
-import { sumFloats, subtractFloats } from '../../tools/sum';
-import { serializeSourceData } from '../../tools/serializer';
-import { findMatchingSubstring } from '../../tools/matchingString';
-import { bid } from '../../styles/_variables.scss';
+import { sumFloats, subtractFloats } from 'tools/sum';
+import { serializeSourceData } from 'tools/serializer';
+import { findMatchingSubstring } from 'tools/matchingString';
+import { bid } from 'styles/_variables.scss';
 import { DECIMAL_PLACES } from './constants';
 
 // FIXME = clean up this code, all the repeated NUMBER etc.

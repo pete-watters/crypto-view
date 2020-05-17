@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { ask } from 'styles/_variables.scss';
 import ListItem from './ListItem';
-import { ask } from '../../../styles/_variables.scss';
 
 class List extends PureComponent {
   render() {

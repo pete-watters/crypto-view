@@ -1,4 +1,4 @@
-import { convertExpToNumerical } from './exponentialToNumerical';
+import { convertExpToNumerical } from 'tools/exponentialToNumerical';
 
 // rename this as a generic util
 export const serializeSourceData = input => {

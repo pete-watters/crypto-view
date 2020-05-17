@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { hover } from '../../../styles/_variables.scss';
+import { hover } from 'styles/_variables.scss';
+
 // FIXME rename this now it's not a list item, actuall more a grid row
 class ListItem extends PureComponent {
   onMouseEnter = () => {
