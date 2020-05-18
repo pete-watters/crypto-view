@@ -1,4 +1,4 @@
-import { convertExpToNumerical } from 'tools/exponentialToNumerical';
+import { exponentialToNumerical } from 'tools/exponentialToNumerical';
 
 // rename this as a generic util
 export const serializeSourceData = input => {
@@ -10,6 +10,6 @@ export const serializeSourceData = input => {
       return '0.0';
     case 'string':
     default:
-      return convertExpToNumerical(input).toFixed(1);
+      return exponentialToNumerical(input).toFixed(1);
   }
 };

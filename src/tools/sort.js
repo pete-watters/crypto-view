@@ -1,4 +1,3 @@
-// Add a test for this
 export const sortByColumn = (array, columnIndex) =>
   array.sort((a, b) => {
     const equal = a[columnIndex] === b[columnIndex];

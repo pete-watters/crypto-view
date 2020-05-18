@@ -2,7 +2,7 @@
 /* eslint-disable import/no-webpack-loader-syntax */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import OrderbookWorker from 'worker-loader!./orderbook/worker';
+import OrderbookWorker from 'worker-loader!./services/orderbook/worker';
 import 'styles/main.scss';
 import { ask, bid } from 'styles/_variables.scss';
 import { Header } from 'components/Header';
