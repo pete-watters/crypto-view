@@ -14,6 +14,8 @@ const calculateAskVolume = (index, array, volume) =>
 const serializePrice = price =>
   Number(serializeSourceData(price)).toFixed(DECIMAL_PLACES.PRICE);
 
+const getPreviousPrice = (index, array) => isFirstElement(index) ? '' : array[index - 1][0];
+
 const sanitiseOrderBook = orderBook =>
   sortByColumn(orderBook.map(([price, volume]) => [serializePrice(price), volume]), 0);
 
@@ -26,16 +28,13 @@ const formatVolume = volume =>
 const computeVolume = (orderBook, type, cumulativeVolume) => {
   let totalVolume = cumulativeVolume;
   return orderBook.map(([price, volume], index, array) => {
-    const firstElement = isFirstElement(index);
     if (isBid(type)) {
       totalVolume = sumFloats(volume, totalVolume);
     } else {
       totalVolume = calculateAskVolume(index, array, totalVolume);
     }
-    const previousPrice = firstElement ? '' : array[index - 1][0];
-    // FIXME big work needed here to make this clearer
     return [
-      formatPrice(index, price, previousPrice),
+      formatPrice(index, price, getPreviousPrice(index, array)),
       formatVolume(volume),
       formatVolume(totalVolume),
     ];
