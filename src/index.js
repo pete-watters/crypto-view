@@ -4,13 +4,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import OrderbookWorker from 'worker-loader!./services/orderbook/worker';
 import 'styles/main.scss';
-import { gridRow, ask, bid } from 'styles/_variables.scss';
+import { ask, bid } from 'styles/_variables.scss';
 import { Header } from 'components/Header';
 import { sanitiseOrderBook, mapCumulativeVolume } from 'features/orderbook/helpers';
 import { sortByColumn } from 'tools/sort';
 import { sumFloats } from 'tools/sum';
 import OrderBook from 'features/orderbook';
 import DepthChart from 'features/depth-chart/DepthChart';
+import LatestTrades from 'features/latest-trades/LatestTrades';
+import { getLatestTrades, generateLatestTrade } from 'features/latest-trades/helpers';
 
 class App extends React.Component {
   constructor(props) {
@@ -43,28 +45,18 @@ class App extends React.Component {
         // FIXME - ASK / BID repeated here
         const asks = mapCumulativeVolume(sortedAsks, ask, totalVolumeAsks);
         const bids = mapCumulativeVolume(sortedBids, bid, 0);
-
-        const getRandomLastOrder = (highestAsk, lowestBid) => {
-          const type = Math.round(Math.random()) === 1 ? [ask, highestAsk] : [bid, lowestBid];
-          return [type[0], type[1].join().replace(',', '')];
-        };
         const currentTime = new Date().toLocaleTimeString();
-        const randomLastOrder = getRandomLastOrder(bids[0][0], asks[asks.length - 1][0]);
-        const LATEST_TRADE_LIST_LENGTH = 5;
-        const LATEST_TRADE_DECIMAL_PLACES = 8;
-        const randomVolume = Number(Math.random()).toFixed(LATEST_TRADE_DECIMAL_PLACES);
-        const latestTrade = [...randomLastOrder, randomVolume, currentTime];
-        // could be a selector
+        const highestAsk = asks[asks.length - 1][0];
+        const lowestBid = bids[0][0];
+        const latestTrade = generateLatestTrade(highestAsk, lowestBid, currentTime);
         const { latestTrades } = this.state;
-        // FIXME this isn't clearing properly
-        const tradeList = latestTrades.length <= LATEST_TRADE_LIST_LENGTH ? latestTrades : [];
+
         this.setState({
           orderBook: { asks, bids },
           currentTime,
-          latestTrades: [...tradeList, latestTrade],
+          latestTrades: getLatestTrades(latestTrades, latestTrade),
           latestTradePrice: latestTrade[1],
         });
-        // make this be either last ask or first bid
       };
     }
   }
@@ -77,7 +69,6 @@ class App extends React.Component {
     const { currentTime, latestTradePrice, orderBook, latestTrades } = this.state;
     // TODOs
     // refactor clean
-    // add new static component for UL and LI tables
     // add a HOC for article elements
     // rename components - no need to repeat OrderBook X etc.
     // add error Boundary + loading
@@ -92,13 +83,7 @@ class App extends React.Component {
             <h3>{currentTime}</h3>
           </article>
           <article>
-            {latestTrades && latestTrades.map(([type, price, volume, time]) => (
-              <div key={`${time}-${volume}`} className={gridRow}>
-                <span className={type}>{price}</span>
-                <span>{volume}</span>
-                <span>{time}</span>
-              </div>
-                ))}
+            <LatestTrades latestTrades={latestTrades} />
           </article>
         </aside>
       </>
