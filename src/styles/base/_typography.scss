@@ -2,8 +2,8 @@ $arial: 'Arial, Helvetica', sans-serif;
 $roboto: 'Roboto Mono', monospace;
 $orbitron: 'Orbitron', sans-serif;
 
-
-html, body {
+html,
+body {
   font-family: $arial;
   color: $white;
   font-size: 1rem;
@@ -22,7 +22,6 @@ h1 {
   line-height: 2.25rem;
 }
 
-
 h2 {
   font-size: 1.5rem;
   line-height: 1.75rem;
@@ -35,7 +34,7 @@ h3 {
   letter-spacing: 0.01em;
 }
 
-em { 
+em {
   opacity: 0.5;
   font-style: normal;
 }

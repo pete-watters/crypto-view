@@ -4,18 +4,18 @@ $xLarge: '90rem';
 
 @mixin medium {
   @media (min-width: #{$medium}) {
-      @content;
+    @content;
   }
 }
 
 @mixin large {
   @media (min-width: #{$large}) {
-      @content;
+    @content;
   }
 }
 
 @mixin xLarge {
   @media (min-width: #{$xLarge}) {
-      @content;
+    @content;
   }
 }

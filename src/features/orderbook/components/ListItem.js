@@ -17,7 +17,7 @@ class ListItem extends PureComponent {
   onClick = () => {
     const { price, selectPrice } = this.props;
     selectPrice(price);
-  }
+  };
 
   render() {
     const { price, volume, cumulativeVolume, highlightRow, type } = this.props;
@@ -34,10 +34,18 @@ class ListItem extends PureComponent {
         role="button"
         tabIndex={0}
       >
-        <span className={type}><em>{matched}</em>{unique}</span>
-        <span>{integral}.<em>{decimal}</em></span>
-        <span>{cumulativeIntegral}.<em>{cumulativeDecimal}</em></span>
-      </div>);
+        <span className={type}>
+          <em>{matched}</em>
+          {unique}
+        </span>
+        <span>
+          {integral}.<em>{decimal}</em>
+        </span>
+        <span>
+          {cumulativeIntegral}.<em>{cumulativeDecimal}</em>
+        </span>
+      </div>
+    );
   }
 }
 

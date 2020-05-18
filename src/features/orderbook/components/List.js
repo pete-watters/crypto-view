@@ -8,12 +8,12 @@ class List extends PureComponent {
     const { type, data, updateHoverState, highlightRow, selectPrice } = this.props;
     // FIXME refactor this
     const getRowNumber = (rowType, index) =>
-      (rowType === ask ? `${index + 1}` : `${data.length - index}`);
+      rowType === ask ? `${index + 1}` : `${data.length - index}`;
 
     return (
       <>
         <ul>
-          {data.map(([price, volume, cumulativeVolume], index) =>
+          {data.map(([price, volume, cumulativeVolume], index) => (
             <li key={`${price}-${volume}`}>
               <ListItem
                 price={price}
@@ -25,9 +25,11 @@ class List extends PureComponent {
                 highlightRow={getRowNumber(type, index) === highlightRow}
                 selectPrice={selectPrice}
               />
-            </li>)}
+            </li>
+          ))}
         </ul>
-      </>);
+      </>
+    );
   }
 }
 

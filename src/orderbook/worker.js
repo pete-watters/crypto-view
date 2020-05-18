@@ -2,8 +2,7 @@
 /* eslint-disable no-param-reassign */
 const orders = 15;
 const getAmount = () => Math.floor(Math.random() * 10 + 1) + Math.random();
-const randomNumber = (min = 0, max = 1) =>
-  Math.floor(Math.random() * (max - min) + min);
+const randomNumber = (min = 0, max = 1) => Math.floor(Math.random() * (max - min) + min);
 
 const initializeOrderbook = () => {
   const orderbook = { asks: [], bids: [] };

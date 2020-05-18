@@ -5,9 +5,9 @@ import { bid } from 'styles/_variables.scss';
 import { DECIMAL_PLACES } from './constants';
 
 // FIXME = clean up this code, all the repeated NUMBER etc.
-export const sanitiseOrderBook = orderBook => orderBook.map(([price, volume]) =>
-  [
-    (Number(serializeSourceData(price))).toFixed(DECIMAL_PLACES.PRICE),
+export const sanitiseOrderBook = orderBook =>
+  orderBook.map(([price, volume]) => [
+    Number(serializeSourceData(price)).toFixed(DECIMAL_PLACES.PRICE),
     // (Number(volume)).toFixed(DECIMAL_PLACES.VOLUME),
     volume,
   ]);
@@ -15,15 +15,13 @@ export const sanitiseOrderBook = orderBook => orderBook.map(([price, volume]) =>
 const isBid = type => type === bid;
 const isFirstElement = index => index === 0;
 // FIXME refactor more here to get rid of the -1 - make a const
-const calculateAskVolume = (index, array, cumulativeVolume) => (
-  isFirstElement(index) ? cumulativeVolume : subtractFloats(array[index - 1][1], cumulativeVolume)
-);
+const calculateAskVolume = (index, array, cumulativeVolume) =>
+  isFirstElement(index) ? cumulativeVolume : subtractFloats(array[index - 1][1], cumulativeVolume);
 
 const formatPrice = (index, price, previousPrice) =>
-  (isFirstElement(index) ? ['', price] : findMatchingSubstring(price, previousPrice));
+  isFirstElement(index) ? ['', price] : findMatchingSubstring(price, previousPrice);
 
-const formatVolume = volume =>
-  String((Number(volume)).toFixed(DECIMAL_PLACES.VOLUME)).split('.');
+const formatVolume = volume => String(Number(volume).toFixed(DECIMAL_PLACES.VOLUME)).split('.');
 
 export const mapCumulativeVolume = (orderBook, type, cumulativeVolume) => {
   let totalVolume = cumulativeVolume;

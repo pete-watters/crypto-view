@@ -24,14 +24,21 @@ class OrderBook extends Component {
   }
 
   render() {
-    const { data: { bids, asks }, latestTradePrice } = this.props;
+    const {
+      data: { bids, asks },
+      latestTradePrice,
+    } = this.props;
     const { highlightRow, selectedPrice } = this.state;
     const fairMarketPrice = `${latestTradePrice} ${CRYPTO_VIEW.CURRENCY}`;
 
     return (
       <>
         {/* CHECK think I have bids and asks backwards! */}
-        {selectedPrice && <h2>{selectedPrice} {CRYPTO_VIEW.CURRENCY}</h2>}
+        {selectedPrice && (
+          <h2>
+            {selectedPrice} {CRYPTO_VIEW.CURRENCY}
+          </h2>
+        )}
         <List
           type={bid}
           data={asks}
@@ -47,7 +54,8 @@ class OrderBook extends Component {
           selectPrice={this.selectPrice}
           highlightRow={highlightRow}
         />
-      </>);
+      </>
+    );
   }
 }
 

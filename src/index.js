@@ -30,9 +30,9 @@ class App extends React.Component {
     if (window.Worker) {
       this.ob = new OrderbookWorker();
       this.ob.onmessage = e => {
-      // investigate this for optimal worker sorting
-      // https://medium.com/prolanceer/optimizing-react-app-performance-using-web-workers-79266afd4a7
-      // https://github.com/rohanBagchi/react-webworker-demo/tree/master/src
+        // investigate this for optimal worker sorting
+        // https://medium.com/prolanceer/optimizing-react-app-performance-using-web-workers-79266afd4a7
+        // https://github.com/rohanBagchi/react-webworker-demo/tree/master/src
         const orderBook = e.data;
         const cleanAsks = sanitiseOrderBook(orderBook.asks);
         const cleanBids = sanitiseOrderBook(orderBook.bids);
@@ -45,9 +45,7 @@ class App extends React.Component {
         const bids = mapCumulativeVolume(sortedBids, bid, 0);
 
         const getRandomLastOrder = (highestAsk, lowestBid) => {
-          const type = Math.round(Math.random()) === 1
-            ? [ask, highestAsk]
-            : [bid, lowestBid];
+          const type = Math.round(Math.random()) === 1 ? [ask, highestAsk] : [bid, lowestBid];
           return [type[0], type[1].join().replace(',', '')];
         };
         const currentTime = new Date().toLocaleTimeString();
@@ -96,15 +94,16 @@ class App extends React.Component {
           </article>
           <article>
             <ul>
-              {latestTrades && latestTrades.map(([type, price, volume, time]) => (
-                <li key={`${time}-${volume}`}>
-                  <div>
-                    <span className={type}>{price}</span>
-                    <span>{volume}</span>
-                    <span>{time}</span>
-                  </div>
-                </li>))
-          }
+              {latestTrades &&
+                latestTrades.map(([type, price, volume, time]) => (
+                  <li key={`${time}-${volume}`}>
+                    <div>
+                      <span className={type}>{price}</span>
+                      <span>{volume}</span>
+                      <span>{time}</span>
+                    </div>
+                  </li>
+                ))}
             </ul>
           </article>
         </aside>

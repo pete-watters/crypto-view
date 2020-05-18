@@ -1,10 +1,10 @@
-header{
+header {
   grid-area: header;
   padding: 1rem;
   background-color: $mine-shaft;
   figure {
     display: flex;
-    svg{
+    svg {
       height: 50px;
       width: 50px;
       fill: $white;
