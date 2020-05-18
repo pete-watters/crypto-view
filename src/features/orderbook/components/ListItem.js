@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { hover } from 'styles/_variables.scss';
+import { gridRow, hover } from 'styles/_variables.scss';
 
 // FIXME rename this now it's not a list item, actuall more a grid row
 class ListItem extends PureComponent {
@@ -30,7 +30,7 @@ class ListItem extends PureComponent {
         onMouseLeave={this.onMouseLeave}
         onClick={this.onClick}
         onKeyPress={this.onClick}
-        className={highlightRow ? hover : ''}
+        className={`${gridRow} ${highlightRow  && hover}`}
         role="button"
         tabIndex={0}
       >

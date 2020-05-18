@@ -1,9 +1,11 @@
 $ask: ask;
 $bid: bid;
 $hover: hover;
+$gridRow: grid-row; 
 
 :export {
   ask: $ask;
   bid: $bid;
   hover: $hover;
+  gridRow: $gridRow;
 }

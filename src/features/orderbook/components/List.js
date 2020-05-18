@@ -10,26 +10,19 @@ class List extends PureComponent {
     const getRowNumber = (rowType, index) =>
       rowType === ask ? `${index + 1}` : `${data.length - index}`;
 
-    return (
-      <>
-        <ul>
-          {data.map(([price, volume, cumulativeVolume], index) => (
-            <li key={`${price}-${volume}`}>
-              <ListItem
-                price={price}
-                type={type}
-                volume={volume}
-                cumulativeVolume={cumulativeVolume}
-                updateHoverState={updateHoverState}
-                rowNumber={getRowNumber(type, index)}
-                highlightRow={getRowNumber(type, index) === highlightRow}
-                selectPrice={selectPrice}
-              />
-            </li>
-          ))}
-        </ul>
-      </>
-    );
+    return (data.map(([price, volume, cumulativeVolume], index) => (
+      <ListItem
+        key={`${price}-${volume}`}
+        price={price}
+        type={type}
+        volume={volume}
+        cumulativeVolume={cumulativeVolume}
+        updateHoverState={updateHoverState}
+        rowNumber={getRowNumber(type, index)}
+        highlightRow={getRowNumber(type, index) === highlightRow}
+        selectPrice={selectPrice}
+      />
+      )));
   }
 }
 

@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import OrderbookWorker from 'worker-loader!./services/orderbook/worker';
 import 'styles/main.scss';
-import { ask, bid } from 'styles/_variables.scss';
+import { gridRow, ask, bid } from 'styles/_variables.scss';
 import { Header } from 'components/Header';
 import { sanitiseOrderBook, mapCumulativeVolume } from 'features/orderbook/helpers';
 import { sortByColumn } from 'tools/sort';
@@ -70,14 +70,13 @@ class App extends React.Component {
   }
 
   componentWillUnmount() {
-    window.Worker.terminate();
+    this.ob.terminate();
   }
 
   render() {
     const { currentTime, latestTradePrice, orderBook, latestTrades } = this.state;
     // TODOs
     // refactor clean
-    // add unit tests
     // add new static component for UL and LI tables
     // add a HOC for article elements
     // rename components - no need to repeat OrderBook X etc.
@@ -93,18 +92,13 @@ class App extends React.Component {
             <h3>{currentTime}</h3>
           </article>
           <article>
-            <ul>
-              {latestTrades &&
-                latestTrades.map(([type, price, volume, time]) => (
-                  <li key={`${time}-${volume}`}>
-                    <div>
-                      <span className={type}>{price}</span>
-                      <span>{volume}</span>
-                      <span>{time}</span>
-                    </div>
-                  </li>
+            {latestTrades && latestTrades.map(([type, price, volume, time]) => (
+              <div key={`${time}-${volume}`} className={gridRow}>
+                <span className={type}>{price}</span>
+                <span>{volume}</span>
+                <span>{time}</span>
+              </div>
                 ))}
-            </ul>
           </article>
         </aside>
       </>

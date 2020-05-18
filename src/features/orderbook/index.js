@@ -33,7 +33,6 @@ class OrderBook extends Component {
 
     return (
       <>
-        {/* CHECK think I have bids and asks backwards! */}
         {selectedPrice && (
           <h2>
             {selectedPrice} {CRYPTO_VIEW.CURRENCY}
