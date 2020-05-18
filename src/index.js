@@ -4,11 +4,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import OrderbookWorker from 'worker-loader!./services/orderbook/worker';
 import 'styles/main.scss';
-import { ask, bid } from 'styles/_variables.scss';
 import { Header } from 'components/Header';
-import { sanitiseOrderBook, mapCumulativeVolume } from 'features/orderbook/helpers';
-import { sortByColumn } from 'tools/sort';
-import { sumFloats } from 'tools/sum';
+import { serializeOrderBook } from 'features/orderbook/helpers';
 import OrderBook from 'features/orderbook/OrderBook';
 import DepthChart from 'features/depth-chart/DepthChart';
 import LatestTrades from 'features/latest-trades/LatestTrades';
@@ -32,25 +29,10 @@ class App extends React.Component {
     if (window.Worker) {
       this.ob = new OrderbookWorker();
       this.ob.onmessage = e => {
-        // investigate this for optimal worker sorting
-        // https://medium.com/prolanceer/optimizing-react-app-performance-using-web-workers-79266afd4a7
-        // https://github.com/rohanBagchi/react-webworker-demo/tree/master/src
-        const orderBook = e.data;
-        const cleanAsks = sanitiseOrderBook(orderBook.asks);
-        const cleanBids = sanitiseOrderBook(orderBook.bids);
-        const sortedAsks = sortByColumn(cleanAsks, 0);
-        const sortedBids = sortByColumn(cleanBids, 0);
-        // Try figure out an optimal algo here to avid the double mapping
-        const totalVolumeAsks = cleanAsks.map(item => item[1]).reduce((a, b) => sumFloats(a, b));
-        // FIXME - ASK / BID repeated here
-        const asks = mapCumulativeVolume(sortedAsks, ask, totalVolumeAsks);
-        const bids = mapCumulativeVolume(sortedBids, bid, 0);
-        const currentTime = new Date().toLocaleTimeString();
-        const highestAsk = asks[asks.length - 1][0];
-        const lowestBid = bids[0][0];
-        const latestTrade = generateLatestTrade(highestAsk, lowestBid, currentTime);
         const { latestTrades } = this.state;
-
+        const { asks, bids } = serializeOrderBook(e.data);
+        const currentTime = new Date().toLocaleTimeString();
+        const latestTrade = generateLatestTrade(asks, bids, currentTime);
         this.setState({
           orderBook: { asks, bids },
           currentTime,

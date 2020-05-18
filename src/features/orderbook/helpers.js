@@ -1,8 +1,24 @@
 import { sumFloats, subtractFloats } from 'tools/sum';
+import { sortByColumn } from 'tools/sort';
 import { serializeSourceData } from 'tools/serializer';
 import { findMatchingSubstring } from 'tools/match';
-import { bid } from 'styles/_variables.scss';
+import { ask, bid } from 'styles/_variables.scss';
 import { DECIMAL_PLACES } from './constants';
+
+export const serializeOrderBook = data => {
+  const orderBook = data;
+  const cleanAsks = sanitiseOrderBook(orderBook.asks);
+  const cleanBids = sanitiseOrderBook(orderBook.bids);
+  const sortedAsks = sortByColumn(cleanAsks, 0);
+  const sortedBids = sortByColumn(cleanBids, 0);
+  // Try figure out an optimal algo here to avid the double mapping
+  const totalVolumeAsks = cleanAsks.map(item => item[1]).reduce((a, b) => sumFloats(a, b));
+
+  return {
+      asks: mapCumulativeVolume(sortedAsks, ask, totalVolumeAsks),
+      bids: mapCumulativeVolume(sortedBids, bid, 0),
+    };
+};
 
 // FIXME = clean up this code, all the repeated NUMBER etc.
 export const sanitiseOrderBook = orderBook =>

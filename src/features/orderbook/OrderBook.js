@@ -29,7 +29,6 @@ class OrderBook extends Component {
       latestTradePrice,
     } = this.props;
     const { highlightRow, selectedPrice } = this.state;
-    const fairMarketPrice = `${latestTradePrice} ${CRYPTO_VIEW.CURRENCY}`;
 
     return (
       <>
@@ -47,7 +46,7 @@ class OrderBook extends Component {
           selectPrice={this.selectPrice}
           highlightRow={highlightRow}
         />
-        <MarketPrice price={fairMarketPrice} />
+        {latestTradePrice && <MarketPrice price={`${latestTradePrice} ${CRYPTO_VIEW.CURRENCY}`} /> }
         <Table
           type={ask}
           data={bids}
@@ -66,7 +65,7 @@ OrderBook.propTypes = {
 };
 
 OrderBook.defaultProps = {
-  latestTradePrice: '',
+  latestTradePrice: null,
 };
 
 export default OrderBook;

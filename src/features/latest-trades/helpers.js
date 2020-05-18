@@ -6,7 +6,9 @@ const getRandomLastOrder = (highestAsk, lowestBid) => {
   return [type[0], type[1].join().replace(',', '')];
 };
 
-export const generateLatestTrade = (highestAsk, lowestBid, currentTime) => {
+export const generateLatestTrade = (asks, bids, currentTime) => {
+  const highestAsk = asks[asks.length - 1][0];
+  const lowestBid = bids[0][0];
   const randomVolume = Number(Math.random()).toFixed(LATEST_TRADES.DECIMAL_PLACES);
   return [...getRandomLastOrder(highestAsk, lowestBid), randomVolume, currentTime];
 };
