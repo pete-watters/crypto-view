@@ -8,6 +8,6 @@ const LatestTrades = ({ latestTrades }) =>
       <span>{volume}</span>
       <span>{time}</span>
     </div>
-    ));
+  ));
 
 export default memo(LatestTrades);

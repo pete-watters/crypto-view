@@ -1,5 +1,18 @@
 /* eslint-disable no-magic-numbers */
-import { sumFloats, subtractFloats } from './sum';
+import { sumArray, sumFloats, subtractFloats } from './sum';
+
+const mockMatrix = [
+  [4003.0, 8.104],
+  [4004.9, 5.969],
+  [4005.0, 2.560],
+  [4007.3, 8.652],
+  [4008.9, 9.994],
+];
+
+test('sumArray: Sum of array should be accurate', () => {
+  expect(sumArray(mockMatrix, 1)).toStrictEqual(35.279);
+  expect(sumArray(mockMatrix, 0)).toStrictEqual(20029.1);
+});
 
 test('sumFloats: Floating point addition to 3 decimals should work accurately', () => {
   expect(sumFloats(80.934, 10.734)).toStrictEqual(91.668);

@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { CRYPTO_VIEW } from 'constants/';
+import { CRYPTO_VIEW } from 'constants';
 
 export const Header = () => (
   <header>

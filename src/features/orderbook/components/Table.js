@@ -8,7 +8,7 @@ class Table extends PureComponent {
     const { type, data, updateHoverState, highlightRow, selectPrice } = this.props;
     // FIXME refactor this
     const getRowNumber = (rowType, index) =>
-      rowType === ask ? `${index + 1}` : `${data.length - index}`;
+      (rowType === ask ? `${index + 1}` : `${data.length - index}`);
 
     return (
       <article>
@@ -24,10 +24,10 @@ class Table extends PureComponent {
             highlightRow={getRowNumber(type, index) === highlightRow}
             selectPrice={selectPrice}
           />
-          ))
+        ))
         }
       </article>
-      );
+    );
   }
 }
 

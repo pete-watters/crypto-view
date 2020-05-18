@@ -30,7 +30,7 @@ class TableRow extends PureComponent {
         onMouseLeave={this.onMouseLeave}
         onClick={this.onClick}
         onKeyPress={this.onClick}
-        className={`${gridRow} ${highlightRow  && hover}`}
+        className={`${gridRow} ${highlightRow && hover}`}
         role="button"
         tabIndex={0}
       >

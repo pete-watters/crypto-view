@@ -8,14 +8,14 @@ NOTE as these are price values I made some assumptions to normalise data
 test('Exponential should convert to the first value power', () => {
   expect(exponentialToNumerical(2.5e25)).toBe(25);
   expect(exponentialToNumerical(-1.123e-10)).toBe(0);
-  expect(exponentialToNumerical("4.0117684918745967e+3")).toBe(4011.7684918745967);
-  expect(exponentialToNumerical("4.0117684918745555e+31")).toBe(4011.7684918745554);
+  expect(exponentialToNumerical('4.0117684918745967e+3')).toBe(4011.7684918745967);
+  expect(exponentialToNumerical('4.0117684918745555e+31')).toBe(4011.7684918745554);
 });
 
 test('High negative exponential should default to 0', () => {
   expect(exponentialToNumerical(-1.123e-10)).toBe(0);
   expect(exponentialToNumerical(1.23423534e-12)).toBe(0);
-  expect(exponentialToNumerical("-4.0117684918745555e-31")).toBe(0);
+  expect(exponentialToNumerical('-4.0117684918745555e-31')).toBe(0);
 });
 
 test('Exponential conversion should not fail on non exponential data', () => {
@@ -28,14 +28,14 @@ test('Exponential conversion should not fail on non exponential data', () => {
 });
 
 test('serializeSourceData: Should serialize floats to one decimal place', () => {
-  expect(serializeSourceData(2.555566)).toBe("2.6");
-  expect(serializeSourceData(223.555566)).toBe("223.6");
-  expect(serializeSourceData(223)).toBe("223.0");
+  expect(serializeSourceData(2.555566)).toBe('2.6');
+  expect(serializeSourceData(223.555566)).toBe('223.6');
+  expect(serializeSourceData(223)).toBe('223.0');
 });
 
 test('serializeSourceData: Should serialize exponential values to one decimal place', () => {
-  expect(serializeSourceData("4.0117684918745967e+3")).toBe("4011.8");
-  expect(serializeSourceData("4.0117684918745555e+31")).toBe("4011.8");
+  expect(serializeSourceData('4.0117684918745967e+3')).toBe('4011.8');
+  expect(serializeSourceData('4.0117684918745555e+31')).toBe('4011.8');
 });
 
 test('serializeSourceData: Should handle broken data', () => {
