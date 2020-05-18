@@ -14,7 +14,7 @@ const calculateAskVolume = (index, array, volume) =>
 const serializePrice = price =>
   Number(serializeSourceData(price)).toFixed(DECIMAL_PLACES.PRICE);
 
-const getPreviousPrice = (index, array) => isFirstElement(index) ? '' : array[index - 1][0];
+const getPreviousPrice = (index, array) => (isFirstElement(index) ? '' : array[index - 1][0]);
 
 const sanitiseOrderBook = orderBook =>
   sortByColumn(orderBook.map(([price, volume]) => [serializePrice(price), volume]), 0);

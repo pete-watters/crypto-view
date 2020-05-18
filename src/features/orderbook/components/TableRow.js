@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { gridRow, hover } from 'styles/_variables.scss';
 
-// FIXME rename this now it's not a list item, actuall more a grid row
 class TableRow extends PureComponent {
   onMouseEnter = () => {
     const { rowNumber, updateHoverState } = this.props;
@@ -34,16 +33,9 @@ class TableRow extends PureComponent {
         role="button"
         tabIndex={0}
       >
-        <span className={type}>
-          <em>{matched}</em>
-          {unique}
-        </span>
-        <span>
-          {integral}.<em>{decimal}</em>
-        </span>
-        <span>
-          {cumulativeIntegral}.<em>{cumulativeDecimal}</em>
-        </span>
+        <span className={type}><em>{matched}</em>{unique}</span>
+        <span>{integral}.<em>{decimal}</em></span>
+        <span>{cumulativeIntegral}.<em>{cumulativeDecimal}</em></span>
       </div>
     );
   }
