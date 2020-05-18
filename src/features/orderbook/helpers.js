@@ -1,6 +1,6 @@
 import { sumFloats, subtractFloats } from 'tools/sum';
 import { serializeSourceData } from 'tools/serializer';
-import { findMatchingSubstring } from 'tools/matchingString';
+import { findMatchingSubstring } from 'tools/match';
 import { bid } from 'styles/_variables.scss';
 import { DECIMAL_PLACES } from './constants';
 
