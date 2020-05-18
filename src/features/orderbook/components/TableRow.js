@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { gridRow, hover } from 'styles/_variables.scss';
 
 // FIXME rename this now it's not a list item, actuall more a grid row
-class ListItem extends PureComponent {
+class TableRow extends PureComponent {
   onMouseEnter = () => {
     const { rowNumber, updateHoverState } = this.props;
     updateHoverState(rowNumber);
@@ -49,7 +49,7 @@ class ListItem extends PureComponent {
   }
 }
 
-ListItem.propTypes = {
+TableRow.propTypes = {
   rowNumber: PropTypes.string.isRequired,
   highlightRow: PropTypes.bool,
   type: PropTypes.string.isRequired,
@@ -60,8 +60,8 @@ ListItem.propTypes = {
   selectPrice: PropTypes.func.isRequired,
 };
 
-ListItem.defaultProps = {
+TableRow.defaultProps = {
   highlightRow: null,
 };
 
-export default ListItem;
+export default TableRow;

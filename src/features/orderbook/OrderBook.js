@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { CRYPTO_VIEW } from 'constants';
 import { bid, ask } from 'styles/_variables.scss';
-import List from './components/List';
+import Table from './components/Table';
 import MarketPrice from './components/MarketPrice';
 
 class OrderBook extends Component {
@@ -34,11 +34,13 @@ class OrderBook extends Component {
     return (
       <>
         {selectedPrice && (
-          <h2>
-            {selectedPrice} {CRYPTO_VIEW.CURRENCY}
-          </h2>
+          <article>
+            <h2>
+              {selectedPrice} {CRYPTO_VIEW.CURRENCY}
+            </h2>
+          </article>
         )}
-        <List
+        <Table
           type={bid}
           data={asks}
           updateHoverState={this.updateHoverState}
@@ -46,7 +48,7 @@ class OrderBook extends Component {
           highlightRow={highlightRow}
         />
         <MarketPrice price={fairMarketPrice} />
-        <List
+        <Table
           type={ask}
           data={bids}
           updateHoverState={this.updateHoverState}

@@ -9,7 +9,7 @@ import { Header } from 'components/Header';
 import { sanitiseOrderBook, mapCumulativeVolume } from 'features/orderbook/helpers';
 import { sortByColumn } from 'tools/sort';
 import { sumFloats } from 'tools/sum';
-import OrderBook from 'features/orderbook';
+import OrderBook from 'features/orderbook/OrderBook';
 import DepthChart from 'features/depth-chart/DepthChart';
 import LatestTrades from 'features/latest-trades/LatestTrades';
 import { getLatestTrades, generateLatestTrade } from 'features/latest-trades/helpers';
