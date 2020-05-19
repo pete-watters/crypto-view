@@ -37,6 +37,7 @@
       "no-unused-vars": 2,
       "object-property-newline": ["error", { "allowMultiplePropertiesPerLine": true }],
       "no-trailing-spaces": 2,
+      "no-param-reassign": 0,
       "space-before-blocks": ["error"],
       "keyword-spacing": ["error"],
       "no-magic-numbers": ["error", { "ignore": [-1, 0, 1] }],

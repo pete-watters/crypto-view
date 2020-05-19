@@ -9,19 +9,20 @@ const getRowNumber = (rowType, index, rowData) =>
 const Table = ({ type, data, updateHoverState, highlightRow, selectPrice }) =>
   <article>
     {data.map(([price, volume, cumulativeVolume], index) => {
-          const rowNumber = getRowNumber(type, index, data);
-            return (<TableRow
-              key={`${price}-${volume}`}
-              price={price}
-              type={type}
-              volume={volume}
-              cumulativeVolume={cumulativeVolume}
-              updateHoverState={updateHoverState}
-              rowNumber={rowNumber}
-              highlightRow={rowNumber === highlightRow}
-              selectPrice={selectPrice}
-            />
-        );})
+      const rowNumber = getRowNumber(type, index, data);
+      return (<TableRow
+        key={`${price}-${volume}`}
+        price={price}
+        type={type}
+        volume={volume}
+        cumulativeVolume={cumulativeVolume}
+        updateHoverState={updateHoverState}
+        rowNumber={rowNumber}
+        highlightRow={rowNumber === highlightRow}
+        selectPrice={selectPrice}
+      />
+      );
+    })
         }
   </article>;
 

@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import OrderbookWorker from 'worker-loader!./services/orderbook/worker';
 import 'styles/main.scss';
 import { Header } from 'components/Header';
-import { serializeOrderBook } from 'features/orderbook/helpers';
+import { serializeOrderBook } from 'services/orderbook/helpers';
 import OrderBook from 'features/orderbook/OrderBook';
 import DepthChart from 'features/depth-chart/DepthChart';
 import LatestTrades from 'features/latest-trades/LatestTrades';
