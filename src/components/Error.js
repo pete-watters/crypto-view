@@ -1,31 +1,33 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
+import { CRYPTO_VIEW } from 'constants';
+import * as error from 'styles/components/_error.scss';
 import Layout from './Layout';
 
 const Error = ({ onRetryClick }) =>
   <Layout>
-    <section className="error-page">
-      <h3>Oh no - error! </h3>
-      <article className="needle">
-        <div className="base" />
-        <div className="lines">
-          <div className="vertical" />
-          <div className="horizontal" />
+    <section className={error.errorPage}>
+      <h3>{CRYPTO_VIEW.COPY.ERROR.TEXT}</h3>
+      <article className={error.needle}>
+        <div className={error.base} />
+        <div className={error.lines}>
+          <div className={error.vertical} />
+          <div className={error.horizontal} />
         </div>
       </article>
-      <article className="disk-wrapper">
-        <div className="disk">
-          <div className="half-circle-top" />
-          <div className="half-circle-bottom" />
-          <div className="separator" />
-          <div className="inner-circle">
-            <span>4</span>
-            <div className="dot" />
-            <span>4</span>
+      <article className={error.diskWrapper}>
+        <div className={error.disk}>
+          <div className={error.halfCircleTop} />
+          <div className={error.halfCircleBottom} />
+          <div className={error.separator} />
+          <div className={error.innerCircle}>
+            <span>{CRYPTO_VIEW.COPY.ERROR.CODE}</span>
+            <div className={error.dot} />
+            <span>{CRYPTO_VIEW.COPY.ERROR.CODE}</span>
           </div>
         </div>
       </article>
-      <button onClick={onRetryClick}>Retry</button>
+      <button onClick={onRetryClick}>{CRYPTO_VIEW.COPY.ERROR.RETRY}</button>
     </section>
   </Layout>;
 

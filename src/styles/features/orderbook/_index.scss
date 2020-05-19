@@ -1,4 +1,10 @@
-.orderbook {
-  margin: 0.5rem;
+.#{$orderBook} {
+  margin: auto;
   grid-area: orderbook;
+  article{ 
+    margin: 1rem;
+  }
+  @include medium {
+    margin: 0.5rem;
+  }
 }

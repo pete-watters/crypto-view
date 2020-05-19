@@ -1,8 +1,9 @@
-import React from 'react';
-//  FIXME centralist this class name
+import React, { memo } from 'react';
+import { depthChart } from 'styles/_variables.scss';
+
 const DepthChart = () => (
-  <section className="depth-chart">
+  <section className={depthChart}>
     <canvas id="depth" width="40rem" height="30rem" />
   </section>
 );
-export default DepthChart;
+export default memo(DepthChart);

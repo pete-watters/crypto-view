@@ -5,7 +5,7 @@ header {
   figure {
     @include flex;
     svg {
-      @include size(50px, 50px);
+      @include size(50px, 50px); // Must be PX to avoid FF bug with rem
       fill: $white;
     }
     h1 {

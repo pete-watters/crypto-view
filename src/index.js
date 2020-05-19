@@ -3,7 +3,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import OrderbookWorker from 'worker-loader!./services/orderbook/worker';
-import 'styles/main.scss';
+import 'styles/_main.scss';
+import { orderBook as orderBookClass } from 'styles/_variables.scss';
 import Layout from 'components/Layout';
 import ErrorBoundary from 'containers/ErrorBoundary';
 import { serializeOrderBook } from 'services/orderbook/helpers';
@@ -57,7 +58,7 @@ class App extends React.Component {
       <ErrorBoundary>
         <Layout>
           <DepthChart />
-          <aside className="orderbook">
+          <aside className={orderBookClass}>
             <OrderBook data={orderBook} latestTradePrice={latestTradePrice} />
             <article>
               <h3>{currentTime}</h3>

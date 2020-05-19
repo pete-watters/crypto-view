@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
+import { fairMarketPrice } from 'styles/_variables.scss';
 
 const MarketPrice = ({ price }) => (
-  // FIXME use a sass const here
-  <article className="orderbook-fairmarket-price">
+  <article className={fairMarketPrice}>
     <h3>{price}</h3>
   </article>
 );
@@ -12,4 +12,4 @@ MarketPrice.propTypes = {
   price: PropTypes.string.isRequired,
 };
 
-export default MarketPrice;
+export default memo(MarketPrice);
