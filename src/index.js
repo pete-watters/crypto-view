@@ -3,7 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import OrderbookWorker from 'worker-loader!./services/orderbook/worker';
-import 'styles/_main.scss';
+import 'styles/main.scss';
 import { orderBook as orderBookClass } from 'styles/_variables.scss';
 import Layout from 'components/Layout';
 import ErrorBoundary from 'containers/ErrorBoundary';
@@ -51,8 +51,6 @@ class App extends React.Component {
 
   render() {
     const { currentTime, latestTradePrice, orderBook, latestTrades } = this.state;
-    // add a HOC for article elements
-    // add error Boundary + loading
     // add a basic depth chart
     return (
       <ErrorBoundary>
