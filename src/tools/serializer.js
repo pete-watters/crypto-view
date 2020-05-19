@@ -16,10 +16,6 @@ export const exponentialToNumerical = input => {
   return 0;
 };
 
-// rename this as a generic util
-// format to decimal or something
-// name this better and make it return floats
-// maybe accept decimal places as input and use this to replace all of the Number calls I have
 export const serializeSourceData = input => {
   switch (typeof input) {
     case 'number':

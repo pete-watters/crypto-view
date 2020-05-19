@@ -1,10 +1,6 @@
 /* eslint-disable no-magic-numbers */
 import { exponentialToNumerical, serializeSourceData } from './serializer';
-/*
-NOTE as these are price values I made some assumptions to normalise data
-- high value exponential should truncate to first order e.g. e250000 => e2
-- high negative values should be 0
-*/
+
 test('Exponential should convert to the first value power', () => {
   expect(exponentialToNumerical(2.5e25)).toBe(25);
   expect(exponentialToNumerical(-1.123e-10)).toBe(0);

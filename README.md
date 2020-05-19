@@ -35,6 +35,22 @@ You can then run the tests with
 npm test
 ```
 
+## Data normalisation
+The orderbook recreates a real world problem that we encounter often, not all values of the orderbook will be `float` or `int` - some will be exponential notation. 
+
+As the are price values I made some assumptions to help normalise data
+- high value exponential should truncate to first order e.g. `e250000` as `e2`
+- high negative exponential values are set to `0`
+
+I observed the data growing to some large exponentials so I made a best call here. It may be incorrect but it would be possible to alter the behaviour as required relatively easily. 
+
+From my observations, these issue affected price and not volume so I chose to only serialize price values. 
+
+## Error boundary
+I left a comment in `src/features/orderbook/OrderBook.js` that can be commented to test Error Boundary handling. 
+I am an advocate of clean code, speaking for itself without comments however I thought this would help for demonstration purposes.
+
+
 ## Future improvements
 As part of the requirements, a fixed set of packages could be used. This made it difficult to add adequate tests so a good extension would be to:
 * setup `babel-jest` and add more unit tests
@@ -56,3 +72,5 @@ Require stack:
   src/features/orderbook/helpers.test.js
 Cannot find module 'tools/sum' from 'src/features/orderbook/helpers.js'
 ```
+
+Furthermore, not adding new packages meant a lack of proper SVG parsing so I added an inline SVG in `Header`
