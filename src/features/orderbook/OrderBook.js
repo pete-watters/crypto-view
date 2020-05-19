@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { CRYPTO_VIEW } from 'constants';
 import { bid, ask } from 'styles/_variables.scss';
 import Table from './components/Table';
 import MarketPrice from './components/MarketPrice';
 
-class OrderBook extends Component {
+class OrderBook extends PureComponent {
   constructor() {
     super();
     this.state = {
