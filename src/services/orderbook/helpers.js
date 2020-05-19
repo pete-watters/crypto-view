@@ -26,9 +26,10 @@ const formatPrice = (index, price, previousPrice) =>
 const formatVolume = amount =>
   String(Number(amount).toFixed(DECIMAL_PLACES.AMOUNT)).split('.');
 
-const calculateVolume = type => (index, array, amount, cumulativeAmount) => isBid(type)
-  ? sumFloats(amount, cumulativeAmount)
-  : calculateAskVolume(index, array, cumulativeAmount);
+const calculateVolume = type => (index, array, amount, cumulativeAmount) =>
+  isBid(type)
+    ? sumFloats(amount, cumulativeAmount)
+    : calculateAskVolume(index, array, cumulativeAmount);
 
 const computeVolume = (orderBook, type, cumulativeAmount) =>
   orderBook.map(([price, amount], index, array) => [

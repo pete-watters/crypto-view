@@ -3,7 +3,10 @@
 @import './base/typography';
 @import './base/breakpoints';
 @import './_variables';
+@import './mixins/_flex';
+@import './mixins/_size';
 @import './components/header';
+@import './components/error';
 @import './features/depth-chart/index';
 @import './features/orderbook/index';
 
@@ -21,7 +24,8 @@ body {
   grid-template-rows: auto;
   grid-template-areas:
     'header header'
-    'chart orderbook';
+    'chart orderbook'
+    'footer footer';
   @include medium {
       grid-template-columns: 60% 40%;
   }

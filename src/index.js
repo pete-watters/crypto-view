@@ -4,7 +4,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import OrderbookWorker from 'worker-loader!./services/orderbook/worker';
 import 'styles/main.scss';
-import { Header } from 'components/Header';
+import Layout from 'components/Layout';
+import Error from 'components/Error';
 import { serializeOrderBook } from 'services/orderbook/helpers';
 import OrderBook from 'features/orderbook/OrderBook';
 import DepthChart from 'features/depth-chart/DepthChart';
@@ -52,23 +53,23 @@ class App extends React.Component {
     // TODOs
     // refactor clean
     // add a HOC for article elements
-    // rename components - no need to repeat OrderBook X etc.
     // add error Boundary + loading
     // add a basic depth chart
     return (
-      <>
-        <Header />
-        <DepthChart />
-        <aside className="orderbook">
-          <OrderBook data={orderBook} latestTradePrice={latestTradePrice} />
-          <article>
-            <h3>{currentTime}</h3>
-          </article>
-          <article>
-            <LatestTrades latestTrades={latestTrades} />
-          </article>
-        </aside>
-      </>
+      <Error>
+        <Layout>
+          <DepthChart />
+          <aside className="orderbook">
+            <OrderBook data={orderBook} latestTradePrice={latestTradePrice} />
+            <article>
+              <h3>{currentTime}</h3>
+            </article>
+            <article>
+              <LatestTrades latestTrades={latestTrades} />
+            </article>
+          </aside>
+        </Layout>
+      </Error>
     );
   }
 }
