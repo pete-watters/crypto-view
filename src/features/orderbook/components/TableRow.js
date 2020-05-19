@@ -19,10 +19,10 @@ class TableRow extends PureComponent {
   };
 
   render() {
-    const { price, volume, cumulativeVolume, highlightRow, type } = this.props;
+    const { price, amount, cumulativeAmount, highlightRow, type } = this.props;
     const [matched, unique] = price;
-    const [integral, decimal] = volume;
-    const [cumulativeIntegral, cumulativeDecimal] = cumulativeVolume;
+    const [integral, decimal] = amount;
+    const [cumulativeIntegral, cumulativeDecimal] = cumulativeAmount;
     return (
       <div
         onMouseEnter={this.onMouseEnter}
@@ -46,8 +46,8 @@ TableRow.propTypes = {
   highlightRow: PropTypes.bool,
   type: PropTypes.string.isRequired,
   price: PropTypes.array.isRequired,
-  volume: PropTypes.array.isRequired,
-  cumulativeVolume: PropTypes.array.isRequired,
+  amount: PropTypes.array.isRequired,
+  cumulativeAmount: PropTypes.array.isRequired,
   updateHoverState: PropTypes.func.isRequired,
   selectPrice: PropTypes.func.isRequired,
 };

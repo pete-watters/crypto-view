@@ -8,14 +8,14 @@ const getRowNumber = (rowType, index, rowData) =>
 
 const Table = ({ type, data, updateHoverState, highlightRow, selectPrice }) =>
   <article>
-    {data.map(([price, volume, cumulativeVolume], index) => {
+    {data.map(([price, amount, cumulativeAmount], index) => {
       const rowNumber = getRowNumber(type, index, data);
       return (<TableRow
-        key={`${price}-${volume}`}
+        key={`${price}-${amount}`}
         price={price}
         type={type}
-        volume={volume}
-        cumulativeVolume={cumulativeVolume}
+        amount={amount}
+        cumulativeAmount={cumulativeAmount}
         updateHoverState={updateHoverState}
         rowNumber={rowNumber}
         highlightRow={rowNumber === highlightRow}
