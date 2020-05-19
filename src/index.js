@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import OrderbookWorker from 'worker-loader!./services/orderbook/worker';
 import 'styles/main.scss';
 import Layout from 'components/Layout';
-import Error from 'components/Error';
+import ErrorBoundary from 'containers/ErrorBoundary';
 import { serializeOrderBook } from 'services/orderbook/helpers';
 import OrderBook from 'features/orderbook/OrderBook';
 import DepthChart from 'features/depth-chart/DepthChart';
@@ -50,13 +50,11 @@ class App extends React.Component {
 
   render() {
     const { currentTime, latestTradePrice, orderBook, latestTrades } = this.state;
-    // TODOs
-    // refactor clean
     // add a HOC for article elements
     // add error Boundary + loading
     // add a basic depth chart
     return (
-      <Error>
+      <ErrorBoundary>
         <Layout>
           <DepthChart />
           <aside className="orderbook">
@@ -69,7 +67,7 @@ class App extends React.Component {
             </article>
           </aside>
         </Layout>
-      </Error>
+      </ErrorBoundary>
     );
   }
 }

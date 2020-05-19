@@ -1,11 +1,12 @@
 import React, { memo } from 'react';
+import PropTypes from 'prop-types';
 import Layout from './Layout';
 
-const Error = () =>
+const Error = ({ onRetryClick }) =>
   <Layout>
     <section className="error-page">
       <h3>Oh no - error! </h3>
-      <article className="needle-wrapper">
+      <article className="needle">
         <div className="base" />
         <div className="lines">
           <div className="vertical" />
@@ -24,7 +25,12 @@ const Error = () =>
           </div>
         </div>
       </article>
+      <button onClick={onRetryClick}>Retry</button>
     </section>
   </Layout>;
+
+Error.propTypes = {
+  onRetryClick: PropTypes.func.isRequired,
+};
 
 export default memo(Error);

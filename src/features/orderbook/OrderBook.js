@@ -24,6 +24,7 @@ class OrderBook extends Component {
   }
 
   render() {
+    // throw new Error('I crashed!'); // - TODO uncomment me to test error page
     const {
       data: { bids, asks },
       latestTradePrice,
