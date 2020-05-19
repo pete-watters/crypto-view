@@ -17,28 +17,29 @@ const serializePrice = price =>
 
 const getPreviousPrice = (index, array) => (isFirstElement(index) ? '' : array[index - 1][0]);
 
-const sanitiseOrderBook = orderBook =>
+export const sanitiseSourceData = orderBook =>
   sortByColumn(orderBook.map(([price, amount]) => [serializePrice(price), amount]), 0);
-
-const formatPrice = (index, price, previousPrice) =>
-  findMatchingSubstring(price, previousPrice);
 
 const formatVolume = amount =>
   String(Number(amount).toFixed(DECIMAL_PLACES.AMOUNT)).split('.');
 
-const calculateVolume = type => (index, array, amount, cumulativeAmount) =>
+const calculateVolume = (type, index, array, amount, cumulativeAmount) =>
   isBid(type)
     ? sumFloats(amount, cumulativeAmount)
     : calculateAskVolume(index, array, cumulativeAmount);
 
-const computeVolume = (orderBook, type, cumulativeAmount) =>
-  orderBook.map(([price, amount], index, array) => [
-      formatPrice(index, price, getPreviousPrice(index, array)),
-      formatVolume(amount),
-      formatVolume(calculateVolume(type)(index, array, amount, cumulativeAmount)),
-    ]);
+const computeVolume = (orderBook, type, cumulativeAmount) => {
+  let totalVolume = cumulativeAmount;
+  return orderBook.map(([price, amount], index, array) => {
+    totalVolume = calculateVolume(type, index, array, amount, totalVolume);
+    return [
+    findMatchingSubstring(price, getPreviousPrice(index, array)),
+    formatVolume(amount),
+    formatVolume(totalVolume),
+  ];});
+};
 
-export const serializeOrderBook = ({ asks, bids }) => ({
-  asks: computeVolume(sanitiseOrderBook(asks), ask, sumArray(asks, 1)),
-  bids: computeVolume(sanitiseOrderBook(bids), bid, 0),
+export const serializeOrderBook = (asks, bids) => ({
+  asks: computeVolume(sanitiseSourceData(asks), ask, sumArray(asks, 1)),
+  bids: computeVolume(sanitiseSourceData(bids), bid, 0),
 });
