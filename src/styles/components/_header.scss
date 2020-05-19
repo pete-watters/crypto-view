@@ -3,10 +3,9 @@ header {
   padding: 1rem;
   background-color: $mine-shaft;
   figure {
-    display: flex;
+    @include flex;
     svg {
-      height: 50px;
-      width: 50px;
+      @include size(50px, 50px);
       fill: $white;
     }
     h1 {
