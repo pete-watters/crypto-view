@@ -1,29 +1,28 @@
 const ONE_HUNDRED = 100;
 const TEN = 10;
 
-export function CryptoChart(id, width, height, data) {
-    const chart = this;
-    chart.configureChart(id, width, height, data);
-    // console.log(chart);
+export class CryptoChart {
+    constructor(id, width, height, data) {
+      const chart = this;
+      chart.configureChart(id, width, height, data);
   }
-
-  CryptoChart.prototype.configureChart = function(id, width, height, data) {
+  configureChart(id, width, height, data) {
     const chart = this;
     chart.configureCanvas(id, width, height, data);
     chart.configureChartParams();
     chart.performPreOperations();
     chart.drawChart();
-  };
+  }
 
-  CryptoChart.prototype.configureCanvas = function(id, width, height, data) {
+  configureCanvas(id, width, height, data) {
     const chart = this;
     chart.id = id;
     chart.width = width;
     chart.height = height;
     chart.data = data;
-  };
+  }
 
-  CryptoChart.prototype.configureChartParams = function() {
+  configureChartParams() {
     const chart = this;
     chart.axisRatio = 10;
     chart.verticalMargin = (chart.height * chart.axisRatio) / ONE_HUNDRED;
@@ -39,16 +38,16 @@ export function CryptoChart(id, width, height, data) {
     chart.horizontalFontSize = (chart.width * chart.fontRatio) / ONE_HUNDRED;
     chart.guidelineColor = '#e5e5e5';
     chart.guidelineWidth = 0.5;
-  };
+  }
 
-  CryptoChart.prototype.performPreOperations = function () {
+  performPreOperations () {
     const chart = this;
     chart.createCanvas();
     chart.handleData();
     chart.prepareData();
-  };
+  }
 
-  CryptoChart.prototype.createCanvas = function () {
+  createCanvas () {
     const chart = this;
     const canvas = document.createElement('canvas');
     canvas.id = chart.id;
@@ -58,9 +57,9 @@ export function CryptoChart(id, width, height, data) {
     document.getElementById(chart.id).appendChild(canvas);
     chart.canvas = canvas;
     chart.context = canvas.getContext('2d');
-  };
+  }
 
-  CryptoChart.prototype.handleData = function () {
+  handleData () {
     const chart = this;
     chart.labels = [];
     chart.values = [];
@@ -80,9 +79,9 @@ export function CryptoChart(id, width, height, data) {
     // });
     // console.log('chart.labels', chart.labels);
     // console.log('chart.values', chart.values);
-  };
+  }
 
-  CryptoChart.prototype.prepareData = function() {
+  prepareData() {
     const chart = this;
     chart.itemsNum = chart.data.length;
     chart.maxValue = Math.max.apply(null, chart.values);
@@ -95,9 +94,9 @@ export function CryptoChart(id, width, height, data) {
     chart.verticalUpperBound = Math.ceil(chart.maxValue / TEN) * TEN;
     chart.verticalLabelFreq = chart.verticalUpperBound / chart.itemsNum;
     chart.horizontalLabelFreq = chart.horizontalAxisWidth / chart.itemsNum;
-  };
+  }
 
-  CryptoChart.prototype.drawChart = function() {
+  drawChart() {
     const chart = this;
     chart.drawVerticalAxis();
     chart.drawVerticalLabels();
@@ -106,9 +105,9 @@ export function CryptoChart(id, width, height, data) {
     chart.drawHorizontalGuideLines();
     chart.drawVerticalGuideLines();
     chart.drawBars();
-  };
+  }
 
-  CryptoChart.prototype.drawVerticalAxis = function() {
+  drawVerticalAxis() {
     const chart = this;
     chart.context.beginPath();
     chart.context.strokeStyle = chart.axisColor;
@@ -116,9 +115,9 @@ export function CryptoChart(id, width, height, data) {
     chart.context.moveTo(chart.horizontalMargin, chart.verticalMargin);
     chart.context.lineTo(chart.horizontalMargin, chart.height - chart.verticalMargin);
     chart.context.stroke();
-  };
+  }
 
-  CryptoChart.prototype.drawHorizontalAxis = function() {
+  drawHorizontalAxis() {
     const chart = this;
     chart.context.beginPath();
     chart.context.strokeStyle = chart.axisColor;
@@ -126,9 +125,9 @@ export function CryptoChart(id, width, height, data) {
     chart.context.moveTo(chart.horizontalMargin, chart.height - chart.verticalMargin);
     chart.context.lineTo(chart.width - chart.horizontalMargin, chart.height - chart.verticalMargin);
     chart.context.stroke();
-  };
+  }
 
-  CryptoChart.prototype.drawVerticalLabels = function() {
+  drawVerticalLabels() {
     const chart = this;
     const labelFont = chart.fontStyle + ' ' + chart.fontWeight + ' ' + chart.verticalFontSize + 'px' + chart.fontFamily;
     chart.context.font = labelFont;
@@ -143,9 +142,9 @@ export function CryptoChart(id, width, height, data) {
       const verticalLabelY = chart.verticalMargin + i * scaledVerticalLabelFreq;
       chart.context.fillText(labelText, verticalLabelX, verticalLabelY);
     }
-  };
+  }
 
-  CryptoChart.prototype.drawHorizontalLabels = function() {
+  drawHorizontalLabels() {
     const chart = this;
     const labelFont = chart.fontStyle + ' ' + chart.fontWeight + ' ' + chart.verticalFontSize + 'px' + chart.fontFamily;
     chart.context.textAlign = 'center';
@@ -158,9 +157,9 @@ export function CryptoChart(id, width, height, data) {
       const horizontalLabelY = chart.height - chart.verticalMargin + chart.verticalMargin / chart.axisRatio;
       chart.context.fillText(chart.labels[i], horizontalLabelX, horizontalLabelY);
     }
-  };
+  }
 
-  CryptoChart.prototype.drawHorizontalGuideLines = function() {
+  drawHorizontalGuideLines() {
     const chart = this;
     chart.context.strokeStyle = chart.guidelineColor;
     chart.context.lineWidth = chart.guidelineWidth;
@@ -178,9 +177,9 @@ export function CryptoChart(id, width, height, data) {
       chart.context.lineTo(horizontalGuidelineEndX, horizontalGuidelineEndY);
       chart.context.stroke();
     }
-  };
+  }
 
-  CryptoChart.prototype.drawVerticalGuideLines = function() {
+  drawVerticalGuideLines() {
     const chart = this;
     chart.context.strokeStyle = chart.guidelineColor;
     chart.context.lineWidth = chart.guidelineWidth;
@@ -194,9 +193,9 @@ export function CryptoChart(id, width, height, data) {
       chart.context.lineTo(verticalGuidelineEndX, verticalGuidelineEndY);
       chart.context.stroke();
     }
-  };
+  }
 
-  CryptoChart.prototype.drawBars = function() {
+  drawBars() {
     const chart = this;
     const color = 'red';
     // const fillOpacity = 0.3;
@@ -217,4 +216,5 @@ export function CryptoChart(id, width, height, data) {
           chart.context.stroke();
           chart.context.fill();
         }
-  };
+  }
+}
