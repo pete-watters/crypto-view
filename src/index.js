@@ -21,10 +21,6 @@ class App extends React.Component {
         asks: [],
         bids: [],
       },
-      depthChart: {
-        asks: [],
-        bids: [],
-      },
       currentTime: null,
       latestTrades: [],
       latestTradePrice: null,
@@ -36,17 +32,11 @@ class App extends React.Component {
       this.ob = new OrderbookWorker();
       this.ob.onmessage = e => {
         const { latestTrades } = this.state;
-        // debugger;
-        const asks = sanitiseSourceData(e.data.asks);
-        const bids = sanitiseSourceData(e.data.bids);
-        const { asks: orderBookAsks, bids: orderBookBids } = serializeOrderBook(asks, bids);
-        // console.log(pete);
+        const { asks, bids } = serializeOrderBook(e.data.asks, e.data.bids);
         const currentTime = new Date().toLocaleTimeString();
         const latestTrade = generateLatestTrade(asks, bids, currentTime);
-        // debugger;
         this.setState({
-          orderBook: { asks: orderBookAsks, bids: orderBookBids},
-          depthChart: { asks, bids },
+          orderBook: { asks, bids},
           currentTime,
           latestTrades: getLatestTrades(latestTrades, latestTrade),
           latestTradePrice: latestTrade[1],
@@ -60,12 +50,11 @@ class App extends React.Component {
   }
 
   render() {
-    const { currentTime, depthChart, latestTradePrice, latestTrades, orderBook } = this.state;
-    // console.log('OrderBook', depthChart.asks.length > 0);
+    const { currentTime, latestTradePrice, latestTrades, orderBook } = this.state;
     return (
       <ErrorBoundary>
         <Layout>
-          {depthChart.asks.length > 0 && <DepthChart data={depthChart} />}
+          <DepthChart data={orderBook} />
           <aside className={orderBookClass}>
             <OrderBook data={orderBook} latestTradePrice={latestTradePrice} />
             <article>

@@ -62,7 +62,7 @@ class OrderBook extends PureComponent {
 
 OrderBook.propTypes = {
   data: PropTypes.object.isRequired,
-  latestTradePrice: PropTypes.string,
+  latestTradePrice: PropTypes.number,
 };
 
 OrderBook.defaultProps = {

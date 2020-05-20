@@ -19,12 +19,12 @@ export const exponentialToNumerical = input => {
 export const serializeSourceData = input => {
   switch (typeof input) {
     case 'number':
-      return input.toFixed(1);
+      return Number(input.toFixed(1));
+    case 'string':
+      return  Number(exponentialToNumerical(input).toFixed(1));
     case 'object':
     case 'undefined':
-      return '0.0';
-    case 'string':
     default:
-      return exponentialToNumerical(input).toFixed(1);
+      return Number(0.0);
   }
 };

@@ -64,19 +64,22 @@ export function CryptoChart(id, width, height, data) {
     const chart = this;
     chart.labels = [];
     chart.values = [];
-
-    // could do with one big array here: 
+    // could do with one big array here:
     // ["ask", price, volume]
-    chart.data.forEach(function(item) {
-      chart.labels.push(item[0]);
+    chart.data.forEach(function(item, index) {
+      // debugger;
+      if (index % 3) {
+        chart.labels.push(item[0]);
+      }
+      // chart.labels.push(item[0]);
       chart.values.push(item[1]);
     });
     // chart.data.bids.forEach(function(item) {
     //   chart.labels.push(item[0]);
     //   chart.values.push(item[1]);
     // });
-    console.log(chart.data);
-    console.log(chart.values);
+    // console.log('chart.labels', chart.labels);
+    // console.log('chart.values', chart.values);
   };
 
   CryptoChart.prototype.prepareData = function() {
@@ -184,7 +187,7 @@ export function CryptoChart(id, width, height, data) {
     for (let i = 0; i <= chart.itemsNum; i++ ) {
       const verticalGuidelineStartX = chart.horizontalMargin + i * chart.horizontalLabelFreq;
       const verticalGuidelineStartY = chart.height - chart.verticalMargin;
-      const verticalGuidelineEndX =  chart.horizontalMargin + i * chart.horizontalLabelFreq;;
+      const verticalGuidelineEndX =  chart.horizontalMargin + i * chart.horizontalLabelFreq;
       const verticalGuidelineEndY = chart.verticalMargin;
       chart.context.beginPath();
       chart.context.moveTo(verticalGuidelineStartX, verticalGuidelineStartY);

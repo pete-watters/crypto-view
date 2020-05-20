@@ -1,21 +1,18 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-import { ask } from 'styles/_variables.scss';
+import { formatPrice, formatVolume, getRowNumber} from '../helpers';
 import TableRow from './TableRow';
-
-const getRowNumber = (rowType, index, rowData) =>
-  (rowType === ask ? `${index + 1}` : `${rowData.length - index}`);
 
 const Table = ({ type, data, updateHoverState, highlightRow, selectPrice }) =>
   <article>
-    {data.map(([price, amount, cumulativeAmount], index) => {
+    {data.map(([price, amount, cumulativeAmount], index, array) => {
       const rowNumber = getRowNumber(type, index, data);
       return (<TableRow
         key={`${price}-${amount}`}
-        price={price}
+        price={formatPrice(price, index, array)}
         type={type}
-        amount={amount}
-        cumulativeAmount={cumulativeAmount}
+        amount={formatVolume(amount)}
+        cumulativeAmount={formatVolume(cumulativeAmount)}
         updateHoverState={updateHoverState}
         rowNumber={rowNumber}
         highlightRow={rowNumber === highlightRow}
@@ -23,7 +20,7 @@ const Table = ({ type, data, updateHoverState, highlightRow, selectPrice }) =>
       />
       );
     })
-        }
+    }
   </article>;
 
 Table.propTypes = {

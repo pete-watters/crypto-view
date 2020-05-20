@@ -24,18 +24,18 @@ test('Exponential conversion should not fail on non exponential data', () => {
 });
 
 test('serializeSourceData: Should serialize floats to one decimal place', () => {
-  expect(serializeSourceData(2.555566)).toBe('2.6');
-  expect(serializeSourceData(223.555566)).toBe('223.6');
-  expect(serializeSourceData(223)).toBe('223.0');
+  expect(serializeSourceData(2.555566)).toBe(2.6);
+  expect(serializeSourceData(223.555566)).toBe(223.6);
+  expect(serializeSourceData(223)).toBe(223.0);
 });
 
 test('serializeSourceData: Should serialize exponential values to one decimal place', () => {
-  expect(serializeSourceData('4.0117684918745967e+3')).toBe('4011.8');
-  expect(serializeSourceData('4.0117684918745555e+31')).toBe('4011.8');
+  expect(serializeSourceData('4.0117684918745967e+3')).toBe(4011.8);
+  expect(serializeSourceData('4.0117684918745555e+31')).toBe(4011.8);
 });
 
 test('serializeSourceData: Should handle broken data', () => {
-  expect(serializeSourceData(null)).toBe('0.0');
-  expect(serializeSourceData()).toBe('0.0');
-  expect(serializeSourceData({})).toBe('0.0');
+  expect(serializeSourceData(null)).toBe(0);
+  expect(serializeSourceData()).toBe(0);
+  expect(serializeSourceData({})).toBe(0);
 });
