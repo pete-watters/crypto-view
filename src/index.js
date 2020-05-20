@@ -7,7 +7,7 @@ import 'styles/main.scss';
 import { orderBook as orderBookClass } from 'styles/_variables.scss';
 import Layout from 'components/Layout';
 import ErrorBoundary from 'containers/ErrorBoundary';
-import { serializeOrderBook } from 'services/orderbook/helpers';
+import { serializeOrderBook, sanitiseSourceData } from 'services/orderbook/helpers';
 import OrderBook from 'features/orderbook/OrderBook';
 import DepthChart from 'features/depth-chart/DepthChart';
 import LatestTrades from 'features/latest-trades/LatestTrades';
@@ -18,6 +18,10 @@ class App extends React.Component {
     super(props);
     this.state = {
       orderBook: {
+        asks: [],
+        bids: [],
+      },
+      depthChart: {
         asks: [],
         bids: [],
       },
@@ -32,11 +36,17 @@ class App extends React.Component {
       this.ob = new OrderbookWorker();
       this.ob.onmessage = e => {
         const { latestTrades } = this.state;
-        const { asks, bids } = serializeOrderBook(e.data);
+        // debugger;
+        const asks = sanitiseSourceData(e.data.asks);
+        const bids = sanitiseSourceData(e.data.bids);
+        const { asks: orderBookAsks, bids: orderBookBids } = serializeOrderBook(asks, bids);
+        // console.log(pete);
         const currentTime = new Date().toLocaleTimeString();
         const latestTrade = generateLatestTrade(asks, bids, currentTime);
+        // debugger;
         this.setState({
-          orderBook: { asks, bids },
+          orderBook: { asks: orderBookAsks, bids: orderBookBids},
+          depthChart: { asks, bids },
           currentTime,
           latestTrades: getLatestTrades(latestTrades, latestTrade),
           latestTradePrice: latestTrade[1],
@@ -50,12 +60,12 @@ class App extends React.Component {
   }
 
   render() {
-    const { currentTime, latestTradePrice, orderBook, latestTrades } = this.state;
-    // add a basic depth chart
+    const { currentTime, depthChart, latestTradePrice, latestTrades, orderBook } = this.state;
+    // console.log('OrderBook', depthChart.asks.length > 0);
     return (
       <ErrorBoundary>
         <Layout>
-          <DepthChart />
+          {depthChart.asks.length > 0 && <DepthChart data={depthChart} />}
           <aside className={orderBookClass}>
             <OrderBook data={orderBook} latestTradePrice={latestTradePrice} />
             <article>

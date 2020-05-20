@@ -40,7 +40,7 @@
       "no-param-reassign": 0,
       "space-before-blocks": ["error"],
       "keyword-spacing": ["error"],
-      "no-magic-numbers": ["error", { "ignore": [-1, 0, 1] }],
+      "no-magic-numbers": ["error", { "ignore": [-1, 0, 1, 2] }],
       "no-restricted-globals": [0, "error", "event", "fdescribe"],
       "react/button-has-type": 0,
       "react/forbid-prop-types": 0,
