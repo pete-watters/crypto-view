@@ -1,23 +1,72 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-// This seems a bit pointless now
-// should change this to contain the aside
-// compose it of two lists and fair trade section in center
-// pass the li's to list as children
-const OrderBook = ({ children }) => 
-  <ul>
-  { children }
-  </ul>;
+import { CRYPTO_VIEW } from 'constants';
+import { bid, ask } from 'styles/main.scss';
+import Table from './components/Table';
+import MarketPrice from './components/MarketPrice';
+
+class OrderBook extends PureComponent {
+  constructor() {
+    super();
+    this.state = {
+      selectedPrice: '',
+    };
+    this.selectPrice = this.selectPrice.bind(this);
+    this.updateHoverState = this.updateHoverState.bind(this);
+  }
+
+  selectPrice(price) {
+    this.setState({ selectedPrice: price });
+  }
+
+  updateHoverState(row) {
+    this.setState({ highlightRow: row });
+  }
+
+  render() {
+    // throw new Error('I crashed!'); // - TODO uncomment me to test error page
+    const {
+      data: { bids, asks },
+      latestTradePrice,
+    } = this.props;
+    const { highlightRow, selectedPrice } = this.state;
+
+    return (
+      <>
+        {selectedPrice && (
+          <article>
+            <h2>
+              {selectedPrice} {CRYPTO_VIEW.CURRENCY}
+            </h2>
+          </article>
+        )}
+        <Table
+          type={bid}
+          data={asks}
+          updateHoverState={this.updateHoverState}
+          selectPrice={this.selectPrice}
+          highlightRow={highlightRow}
+        />
+        {latestTradePrice && <MarketPrice price={`${latestTradePrice} ${CRYPTO_VIEW.CURRENCY}`} /> }
+        <Table
+          type={ask}
+          data={bids}
+          updateHoverState={this.updateHoverState}
+          selectPrice={this.selectPrice}
+          highlightRow={highlightRow}
+        />
+      </>
+    );
+  }
+}
 
 OrderBook.propTypes = {
-  children: PropTypes.array.isRequired,
-  error: PropTypes.bool,
-  loading: PropTypes.bool,
+  data: PropTypes.object.isRequired,
+  latestTradePrice: PropTypes.number,
 };
 
 OrderBook.defaultProps = {
-  error: false,
-  loading: null,
+  latestTradePrice: null,
 };
 
 export default OrderBook;

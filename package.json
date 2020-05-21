@@ -1,13 +1,14 @@
 {
-  "name": "hire-test",
+  "name": "crypto-view",
   "version": "1.0.0",
-  "description": "CW Front End Hiring Challenge",
+  "description": "Crypto View",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --port 9080 --mode development --open",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "test": "jest"
   },
-  "author": "Cryptowatch",
+  "author": "Pete Watters",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.2.2",

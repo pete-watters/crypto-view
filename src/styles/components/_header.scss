@@ -1,0 +1,15 @@
+header {
+  grid-area: header;
+  padding: 1rem;
+  background-color: $mine-shaft;
+  figure {
+    @include flex;
+    svg {
+      @include size(50px, 50px); // Must be PX to avoid FF bug with rem
+      fill: $white;
+    }
+    h1 {
+      margin: 0.5rem 1.25rem;
+    }
+  }
+}

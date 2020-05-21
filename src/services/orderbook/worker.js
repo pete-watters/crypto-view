@@ -1,9 +1,8 @@
-/* global postMessage */
-
+/* eslint-disable no-magic-numbers */
+/* eslint-disable no-param-reassign */
 const orders = 15;
 const getAmount = () => Math.floor(Math.random() * 10 + 1) + Math.random();
-const randomNumber = (min = 0, max = 1) =>
-  Math.floor(Math.random() * (max - min) + min);
+const randomNumber = (min = 0, max = 1) => Math.floor(Math.random() * (max - min) + min);
 
 const initializeOrderbook = () => {
   const orderbook = { asks: [], bids: [] };
@@ -28,7 +27,7 @@ const run = orderbook => {
     const randomRange = randomNumber(0, 10);
 
     for (let i = 0; i < randomRange; i += 1) {
-      tradeCount = tradeCount + 1;
+      tradeCount += 1;
       const askPosition = randomNumber(0, orders);
       const bidPosition = randomNumber(0, orders);
       const ask = orderbook.asks[askPosition][0] + (i % 2);

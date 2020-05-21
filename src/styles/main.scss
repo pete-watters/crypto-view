@@ -1,0 +1,70 @@
+@import './base/_reset';
+@import './base/_colors';
+@import './base/_typography';
+@import './base/_breakpoints';
+@import './_variables';
+@import './mixins/_flex';
+@import './mixins/_size';
+@import './components/_header';
+@import './components/_error';
+@import './features/depth-chart/_index';
+@import './features/orderbook/_index';
+
+html, body {
+  background-color: $heavy-metal;
+}
+
+#app {
+  height: 100%;
+  text-align: center;
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-areas:
+    'header'
+    'chart'
+    'orderbook';
+  @include medium {
+    grid-template-areas:
+      'header header'
+      'chart orderbook';
+      grid-template-columns: 60% 40%;
+  }
+  @include large {
+      grid-template-columns: 70% 30%;
+  }
+  @include xLarge {
+    grid-template-columns: 75% 25%;
+}
+}
+
+.#{$bid} {
+  color: $green;
+}
+.#{$ask} {
+  color: $milano-red;
+}
+
+.#{$gridRow} {
+  display: grid;
+  grid-template-columns: 6rem 6rem 6rem;
+  grid-column-gap: 1rem;
+  text-align: right;
+  &.#{$hover} {
+    cursor: pointer;
+    background-color: $mine-shaft;
+    opacity: 0.7;
+  }
+}
+
+:export {
+  ask: $ask;
+  bid: $bid;
+  depthChart: $depthChart;
+  fairMarketPrice: $fairMarketPrice;
+  gridRow: $gridRow;
+  hover: $hover;
+  orderBook: $orderBook;
+  swirl: $swirl;
+  roboto: $roboto;
+  white: $white;
+}
