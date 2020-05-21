@@ -8,15 +8,18 @@ class DepthChart extends Component {
   componentDidMount() {
     this.drawDepthChart();
   }
+
   componentDidUpdate(prevProps) {
     const { data } = this.props;
     if (prevProps.data !== data) {
       this.drawDepthChart();
     }
   }
+
   drawDepthChart() {
     const { data } = this.props;
-    new CryptoChart(CHART_CONFIG.ID, CHART_CONFIG.WIDTH, CHART_CONFIG.HEIGHT, data);
+    const chart = new CryptoChart(CHART_CONFIG.ID, CHART_CONFIG.WIDTH, CHART_CONFIG.HEIGHT, data);
+    return chart;
   }
 
   render() {
