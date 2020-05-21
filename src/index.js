@@ -35,7 +35,7 @@ class App extends React.Component {
         const currentTime = new Date().toLocaleTimeString();
         const latestTrade = generateLatestTrade(asks, bids, currentTime);
         this.setState({
-          orderBook: { asks, bids},
+          orderBook: { asks, bids },
           currentTime,
           latestTrades: getLatestTrades(latestTrades, latestTrade),
           latestTradePrice: latestTrade[1],

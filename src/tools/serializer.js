@@ -21,7 +21,7 @@ export const serializeSourceData = input => {
     case 'number':
       return Number(input.toFixed(1));
     case 'string':
-      return  Number(exponentialToNumerical(input).toFixed(1));
+      return Number(exponentialToNumerical(input).toFixed(1));
     case 'object':
     case 'undefined':
     default:

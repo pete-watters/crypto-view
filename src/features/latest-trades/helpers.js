@@ -2,7 +2,7 @@ import { ask, bid } from 'styles/main.scss';
 import { LATEST_TRADES } from './constants';
 
 const getRandomLastOrder = (highestAsk, lowestBid) =>
-  Math.round(Math.random()) === 1 ? [ask, highestAsk] : [bid, lowestBid];
+  (Math.round(Math.random()) === 1 ? [ask, highestAsk] : [bid, lowestBid]);
 
 export const generateLatestTrade = (asks, bids, currentTime) => {
   const highestAsk = asks[asks.length - 1][0];

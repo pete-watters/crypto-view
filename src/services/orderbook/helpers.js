@@ -11,16 +11,16 @@ const calculateAskVolume = (index, array, amount) =>
   (isFirstElement(index) ? amount : subtractFloats(array[index - 1][1], amount));
 
 const calculateVolume = (type, index, array, amount, cumulativeAmount) =>
-  isBid(type)
+  (isBid(type)
     ? sumFloats(amount, cumulativeAmount)
-    : calculateAskVolume(index, array, cumulativeAmount);
+    : calculateAskVolume(index, array, cumulativeAmount));
 
 const sortSourceData = (orderBook, type, totalVolume) =>
   sortByColumn(orderBook, 0)
-  .map(([price, amount], index, array) => {
-    totalVolume = calculateVolume(type, index, array, amount, totalVolume);
-    return [serializeSourceData(price), amount, totalVolume, type];
-  });
+    .map(([price, amount], index, array) => {
+      totalVolume = calculateVolume(type, index, array, amount, totalVolume);
+      return [serializeSourceData(price), amount, totalVolume, type];
+    });
 
 export const serializeOrderBook = (asks, bids) => ({
   asks: sortSourceData(asks, ask, sumArray(asks, 1)),

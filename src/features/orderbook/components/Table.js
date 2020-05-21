@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-import { formatPrice, formatVolume, getRowNumber} from '../helpers';
+import { formatPrice, formatVolume, getRowNumber } from '../helpers';
 import TableRow from './TableRow';
 
 const Table = ({ type, data, updateHoverState, highlightRow, selectPrice }) =>
