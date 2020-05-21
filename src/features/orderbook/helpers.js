@@ -1,4 +1,4 @@
-import { ask } from 'styles/_variables.scss';
+import { ask } from 'styles/main.scss';
 import { findMatchingSubstring } from 'tools/match';
 import { DECIMAL_PLACES } from './constants';
 

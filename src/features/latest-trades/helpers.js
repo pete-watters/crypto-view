@@ -1,4 +1,4 @@
-import { ask, bid } from 'styles/_variables.scss';
+import { ask, bid } from 'styles/main.scss';
 import { LATEST_TRADES } from './constants';
 
 const getRandomLastOrder = (highestAsk, lowestBid) =>

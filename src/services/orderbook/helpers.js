@@ -1,7 +1,7 @@
 import { sumArray, sumFloats, subtractFloats } from 'tools/sum';
 import { sortByColumn } from 'tools/sort';
 import { serializeSourceData } from 'tools/serializer';
-import { ask, bid } from 'styles/_variables.scss';
+import { ask, bid } from 'styles/main.scss';
 
 const isBid = type => type === bid;
 
@@ -19,7 +19,7 @@ const sortSourceData = (orderBook, type, totalVolume) =>
   sortByColumn(orderBook, 0)
   .map(([price, amount], index, array) => {
     totalVolume = calculateVolume(type, index, array, amount, totalVolume);
-    return [ serializeSourceData(price), amount, totalVolume];
+    return [serializeSourceData(price), amount, totalVolume, type];
   });
 
 export const serializeOrderBook = (asks, bids) => ({

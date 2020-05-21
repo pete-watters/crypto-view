@@ -3,11 +3,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import OrderbookWorker from 'worker-loader!./services/orderbook/worker';
-import 'styles/main.scss';
-import { orderBook as orderBookClass } from 'styles/_variables.scss';
+import { orderBook as orderBookClass } from 'styles/main.scss';
 import Layout from 'components/Layout';
 import ErrorBoundary from 'containers/ErrorBoundary';
-import { serializeOrderBook, sanitiseSourceData } from 'services/orderbook/helpers';
+import { serializeOrderBook } from 'services/orderbook/helpers';
 import OrderBook from 'features/orderbook/OrderBook';
 import DepthChart from 'features/depth-chart/DepthChart';
 import LatestTrades from 'features/latest-trades/LatestTrades';

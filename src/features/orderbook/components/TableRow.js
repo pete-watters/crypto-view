@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { gridRow, hover } from 'styles/_variables.scss';
+import { gridRow, hover } from 'styles/main.scss';
 
 class TableRow extends PureComponent {
   onMouseEnter = () => {

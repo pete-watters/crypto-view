@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { gridRow } from 'styles/_variables.scss';
+import { gridRow } from 'styles/main.scss';
 
 const LatestTrades = ({ latestTrades }) =>
   latestTrades && latestTrades.map(([type, price, amount, time]) => (

@@ -5,13 +5,3 @@ $fairMarketPrice: fair-market-price;
 $gridRow: grid-row; 
 $hover: hover;
 $orderBook: order-book;
-
-:export {
-  ask: $ask;
-  bid: $bid;
-  depthChart: $depthChart;
-  fairMarketPrice: $fairMarketPrice;
-  gridRow: $gridRow;
-  hover: $hover;
-  orderBook: $orderBook;
-}

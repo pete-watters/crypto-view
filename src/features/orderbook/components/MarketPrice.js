@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-import { fairMarketPrice } from 'styles/_variables.scss';
+import { fairMarketPrice } from 'styles/main.scss';
 
 const MarketPrice = ({ price }) => (
   <article className={fairMarketPrice}>

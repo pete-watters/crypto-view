@@ -1,5 +1,5 @@
-const ONE_HUNDRED = 100;
-const TEN = 10;
+import { swirl, roboto, white, bid, ask } from 'styles/main.scss';
+import { CHART_CONFIG } from './constants';
 
 export class CryptoChart {
     constructor(id, width, height, data) {
@@ -25,19 +25,12 @@ export class CryptoChart {
   configureChartParams() {
     const chart = this;
     chart.axisRatio = 10;
-    chart.verticalMargin = (chart.height * chart.axisRatio) / ONE_HUNDRED;
-    chart.horizontalMargin = (chart.width * chart.axisRatio) / ONE_HUNDRED;
-    chart.axisColor = '#e0e0e0';
-    chart.axisWidth = 0.75;
     chart.fontRatio = 3;
-    chart.fontFamily = 'times';
-    chart.fontStyle = 'normal';
-    chart.fontWeight = '300';
-    chart.fontColor = '#e0e0e0';
-    chart.verticalFontSize = (chart.height * chart.fontRatio) / ONE_HUNDRED;
-    chart.horizontalFontSize = (chart.width * chart.fontRatio) / ONE_HUNDRED;
-    chart.guidelineColor = '#e5e5e5';
-    chart.guidelineWidth = 0.5;
+    chart.fontFamily = roboto;
+    chart.fontColor = white;
+    chart.guidelineColor = swirl;
+    chart.guidelineWidth = 0.2;
+    chart.lineDash = [chart.fontRatio,chart.fontRatio,chart.fontRatio];
   }
 
   performPreOperations () {
@@ -45,6 +38,7 @@ export class CryptoChart {
     chart.createCanvas();
     chart.handleData();
     chart.prepareData();
+    chart.handleMouseEvents();
   }
 
   createCanvas () {
@@ -63,119 +57,54 @@ export class CryptoChart {
     const chart = this;
     chart.labels = [];
     chart.values = [];
-    // could do with one big array here:
-    // ["ask", price, volume]
-    chart.data.forEach(function(item, index) {
-      // debugger;
-      if (index % 3) {
-        chart.labels.push(item[0]);
-      }
-      // chart.labels.push(item[0]);
+    chart.data.asks.forEach(item => {
+      chart.labels.push(item[0]);
       chart.values.push(item[1]);
     });
-    // chart.data.bids.forEach(function(item) {
-    //   chart.labels.push(item[0]);
-    //   chart.values.push(item[1]);
-    // });
-    // console.log('chart.labels', chart.labels);
-    // console.log('chart.values', chart.values);
+    chart.data.bids.forEach(item =>{
+      chart.labels.push(item[0]);
+      chart.values.push(item[1]);
+    });
   }
 
   prepareData() {
     const chart = this;
-    chart.itemsNum = chart.data.length;
-    chart.maxValue = Math.max.apply(null, chart.values);
-    chart.minValue = Math.min.apply(null, chart.values);
-    chart.verticalAxisWidth = chart.height - 2 * chart.verticalMargin;
-    // chart.horizontalAxisWidth = chart.height - 2 * chart.verticalMargin;
-    // TODO rewind here
-    chart.horizontalAxisWidth = chart.height - 2 * chart.horizontalMargin;
-    // TODO remove these ceils and use my preformatted data
-    chart.verticalUpperBound = Math.ceil(chart.maxValue / TEN) * TEN;
-    chart.verticalLabelFreq = chart.verticalUpperBound / chart.itemsNum;
-    chart.horizontalLabelFreq = chart.horizontalAxisWidth / chart.itemsNum;
+    chart.itemsNum = chart.values.length;
+    if (chart.itemsNum > 0) {
+      chart.maxValue = Math.max( chart.data[CHART_CONFIG.ASKS][0][2],  chart.data[CHART_CONFIG.BIDS][chart.data[CHART_CONFIG.BIDS].length-1][2]);
+     }
   }
 
   drawChart() {
     const chart = this;
-    chart.drawVerticalAxis();
-    chart.drawVerticalLabels();
-    chart.drawHorizontalAxis();
     chart.drawHorizontalLabels();
-    chart.drawHorizontalGuideLines();
     chart.drawVerticalGuideLines();
-    chart.drawBars();
-  }
-
-  drawVerticalAxis() {
-    const chart = this;
-    chart.context.beginPath();
-    chart.context.strokeStyle = chart.axisColor;
-    chart.context.lineWidth = chart.axisWidth;
-    chart.context.moveTo(chart.horizontalMargin, chart.verticalMargin);
-    chart.context.lineTo(chart.horizontalMargin, chart.height - chart.verticalMargin);
-    chart.context.stroke();
-  }
-
-  drawHorizontalAxis() {
-    const chart = this;
-    chart.context.beginPath();
-    chart.context.strokeStyle = chart.axisColor;
-    chart.context.lineWidth = chart.axisWidth;
-    chart.context.moveTo(chart.horizontalMargin, chart.height - chart.verticalMargin);
-    chart.context.lineTo(chart.width - chart.horizontalMargin, chart.height - chart.verticalMargin);
-    chart.context.stroke();
-  }
-
-  drawVerticalLabels() {
-    const chart = this;
-    const labelFont = chart.fontStyle + ' ' + chart.fontWeight + ' ' + chart.verticalFontSize + 'px' + chart.fontFamily;
-    chart.context.font = labelFont;
-    chart.context.textAlign = 'right';
-    chart.context.fillStyle = chart.fontColor;
-
-    const scaledVerticalLabelFreq = (chart.verticalAxisWidth / chart.verticalUpperBound) * chart.verticalLabelFreq;
-
-    for (let i = 0; i <= chart.itemsNum; i++ ) {
-      const labelText = chart.verticalUpperBound - i * chart.verticalLabelFreq;
-      const verticalLabelX = chart.horizontalMargin - chart.horizontalMargin / chart.axisRatio;
-      const verticalLabelY = chart.verticalMargin + i * scaledVerticalLabelFreq;
-      chart.context.fillText(labelText, verticalLabelX, verticalLabelY);
+    if (chart.itemsNum > 0) {
+      chart.drawDepthChart(bid);
+      chart.drawDepthChart(ask);
     }
   }
 
   drawHorizontalLabels() {
     const chart = this;
-    const labelFont = chart.fontStyle + ' ' + chart.fontWeight + ' ' + chart.verticalFontSize + 'px' + chart.fontFamily;
+    const isEven = index => index & 1;
     chart.context.textAlign = 'center';
     chart.context.textBaseline = 'top';
-    chart.context.font = labelFont;
     chart.context.fillStyle = chart.fontColor;
 
-    for (let i = 0; i <= chart.itemsNum-1; i++ ) {
-      const horizontalLabelX = chart.horizontalMargin + i * chart.horizontalLabelFreq + chart.horizontalLabelFreq / 2;
-      const horizontalLabelY = chart.height - chart.verticalMargin + chart.verticalMargin / chart.axisRatio;
-      chart.context.fillText(chart.labels[i], horizontalLabelX, horizontalLabelY);
+    for (const i in chart.data[CHART_CONFIG.BIDS]) {
+      if (!isEven(i)) continue;
+      const horizontalLabelX = chart.width/2 - i * chart.itemsNum;
+      const horizontalLabelY = chart.height - chart.axisRatio;
+      chart.context.fillText(chart.data[CHART_CONFIG.BIDS][i][0], horizontalLabelX, horizontalLabelY);
     }
-  }
 
-  drawHorizontalGuideLines() {
-    const chart = this;
-    chart.context.strokeStyle = chart.guidelineColor;
-    chart.context.lineWidth = chart.guidelineWidth;
-
-    const scaledVerticalLabelFreq = (chart.verticalAxisWidth / chart.verticalUpperBound) * chart.verticalLabelFreq;
-
-    for (let i = 0; i <= chart.itemsNum; i++ ) {
-      const horizontalGuidelineStartX = chart.horizontalMargin;
-      const horizontalGuidelineStartY = chart.verticalMargin + i * scaledVerticalLabelFreq;
-      const horizontalGuidelineEndX = chart.horizontalMargin + chart.horizontalAxisWidth;
-      const horizontalGuidelineEndY = chart.verticalMargin + i * scaledVerticalLabelFreq;
-
-      chart.context.beginPath();
-      chart.context.moveTo(horizontalGuidelineStartX, horizontalGuidelineStartY);
-      chart.context.lineTo(horizontalGuidelineEndX, horizontalGuidelineEndY);
-      chart.context.stroke();
+    for (const i in chart.data[CHART_CONFIG.ASKS]) {
+      if (!isEven(i)) continue;
+      const horizontalLabelX = chart.width/2 + i * chart.itemsNum;
+      const horizontalLabelY = chart.height - chart.axisRatio;
+      var index = chart.data[CHART_CONFIG.ASKS].length - i -1;
+      chart.context.fillText(chart.data[CHART_CONFIG.ASKS][index][0], horizontalLabelX, horizontalLabelY);
     }
   }
 
@@ -183,11 +112,12 @@ export class CryptoChart {
     const chart = this;
     chart.context.strokeStyle = chart.guidelineColor;
     chart.context.lineWidth = chart.guidelineWidth;
+    chart.context.setLineDash(chart.lineDash);
     for (let i = 0; i <= chart.itemsNum; i++ ) {
-      const verticalGuidelineStartX = chart.horizontalMargin + i * chart.horizontalLabelFreq;
-      const verticalGuidelineStartY = chart.height - chart.verticalMargin;
-      const verticalGuidelineEndX =  chart.horizontalMargin + i * chart.horizontalLabelFreq;
-      const verticalGuidelineEndY = chart.verticalMargin;
+      const verticalGuidelineStartX = chart.width - i * chart.itemsNum;
+      const verticalGuidelineStartY = 0;
+      const verticalGuidelineEndX =  chart.width - i * chart.itemsNum;
+      const verticalGuidelineEndY = chart.height;
       chart.context.beginPath();
       chart.context.moveTo(verticalGuidelineStartX, verticalGuidelineStartY);
       chart.context.lineTo(verticalGuidelineEndX, verticalGuidelineEndY);
@@ -195,26 +125,71 @@ export class CryptoChart {
     }
   }
 
-  drawBars() {
+  drawDepthChart(orderType) {
     const chart = this;
-    const color = 'red';
-    // const fillOpacity = 0.3;
-    const fillColor = color;
-    const borderColor = 'green';
-    // console.log(color);
+    const opaque = 0.1;
+    const getColour = (type, opacity) =>  type === bid ? `rgb(0, 185, 9, ${opacity})`: `rgb(198, 6, 6, ${opacity})`;
 
-    for (let i = 0; i <= chart.itemsNum; i++ ) {
-          chart.context.beginPath();
-          const barX = chart.horizontalMargin + i * chart.horizontalLabelFreq + chart.horizontalLabelFreq / chart.axisRatio;
-          const barY = chart.height - chart.verticalMargin;
-          const barWidth = chart.horizontalLabelFreq -2 * chart.horizontalLabelFreq / chart.axisRatio;
-          const barHeight = -1 * chart.verticalAxisWidth * chart.values[i] / chart.maxValue;
+    const scaleWidth = chart.width / 2 / (chart.itemsNum/2);
+    const typePosition = 3;
+    chart.context.beginPath();
+    chart.context.moveTo(chart.width/2, chart.height);
 
-          chart.context.fillStyle = fillColor;
-          chart.context.strokeStyle = borderColor;
-          chart.context.rect(barX, barY, barWidth, barHeight);
-          chart.context.stroke();
-          chart.context.fill();
-        }
+    if (orderType === bid) {
+      for (let i in chart.data[CHART_CONFIG.BIDS]) {
+        chart.context.fillStyle = getColour(chart.data[CHART_CONFIG.BIDS][i][typePosition], opaque);
+        chart.context.strokeStyle = getColour(chart.data[CHART_CONFIG.BIDS][i][typePosition], 1);
+        chart.context.stroke();
+        const x = chart.width/2 - i * scaleWidth;
+        const y = chart.height - chart.data[CHART_CONFIG.BIDS][i][2]/ chart.maxValue * chart.height;
+        chart.context.lineTo(x, y);
+      }
+    }
+    else if (orderType === ask) {
+      for (let i in chart.data[CHART_CONFIG.ASKS]) {
+        chart.context.fillStyle = getColour(chart.data[CHART_CONFIG.ASKS][i][typePosition], opaque);
+        chart.context.strokeStyle = getColour(chart.data[CHART_CONFIG.ASKS][i][typePosition], 1);
+        chart.context.stroke();
+        const index =chart.data[CHART_CONFIG.ASKS].length - i -1;
+        const x = chart.width/2 + i * scaleWidth;
+        const y = chart.height - chart.data[CHART_CONFIG.ASKS][index][2]/chart.maxValue * chart.height;
+        chart.context.lineTo(x,y);
+      }
+    }
+
+    chart.context.lineTo(orderType === bid ? 0 : chart.width, 0);
+    chart.context.lineTo(orderType === bid ? 0 : chart.width, chart.height);
+    chart.context.lineTo(chart.width/2, chart.height);
+    chart.context.fill();
+    chart.context.closePath();
+  }
+
+  handleMouseEvents() {
+    const chart = this;
+    // This is not an accurate price
+    // its a best guess of hte value closest to the mouse
+    const guessPrice = mousePosX => {
+      const pixelsPerElement = chart.width / chart.itemsNum;
+      const approxPriceArrayPosition = chart.itemsNum - (mousePosX / pixelsPerElement).toFixed(0);
+      return chart.labels[approxPriceArrayPosition];
+    };
+
+    chart.canvas.addEventListener('mouseover', event => {
+      var mousePos = chart.getMousePosition(event);
+      const message = guessPrice(mousePos.x);
+      document.getElementById(CHART_CONFIG.INFO_ID).innerHTML = message ? message : '';
+    }, false);
+
+    chart.canvas.addEventListener('mouseout', () => {
+      document.getElementById(CHART_CONFIG.INFO_ID).innerHTML = '';
+    }, false);
+  }
+  getMousePosition({clientX, clientY}) {
+    const chart = this;
+    const { left, top } = chart.canvas.getBoundingClientRect();
+    return {
+      x: clientX - left,
+      y: clientY - top,
+    };
   }
 }
