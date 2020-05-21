@@ -32,6 +32,10 @@ export class CryptoChart {
     chart.guidelineColor = swirl;
     chart.guidelineWidth = 0.2;
     chart.lineDash = [chart.fontRatio, chart.fontRatio, chart.fontRatio];
+    chart.askRgbColor = '198, 6, 6';
+    chart.bidRgbColor = '0, 185, 9';
+    chart.fillOpacity = 0.1;
+    chart.lineOpacity = 1;
   }
 
   performPreOperations() {
@@ -96,19 +100,22 @@ export class CryptoChart {
     chart.context.textBaseline = 'top';
     chart.context.fillStyle = chart.fontColor;
 
-    for (const i in chart.data[CHART_CONFIG.BIDS]) {
-      if (!isEven(i)) continue;
-      const horizontalLabelX = chart.width / 2 - i * chart.itemsNum;
-      const horizontalLabelY = chart.height - chart.axisRatio;
-      chart.context.fillText(chart.data[CHART_CONFIG.BIDS][i][0], horizontalLabelX, horizontalLabelY);
+    for (let i = 0; i < chart.data[CHART_CONFIG.BIDS].length; i += 1) {
+      if (isEven(i)) {
+        const horizontalLabelX = chart.width / 2 - i * chart.itemsNum;
+        const horizontalLabelY = chart.height - chart.axisRatio;
+        const label = chart.data[CHART_CONFIG.BIDS][i][0];
+        chart.context.fillText(label, horizontalLabelX, horizontalLabelY);
+      }
     }
-
-    for (const i in chart.data[CHART_CONFIG.ASKS]) {
-      if (!isEven(i)) continue;
-      const horizontalLabelX = chart.width / 2 + i * chart.itemsNum;
-      const horizontalLabelY = chart.height - chart.axisRatio;
-      const index = chart.data[CHART_CONFIG.ASKS].length - i - 1;
-      chart.context.fillText(chart.data[CHART_CONFIG.ASKS][index][0], horizontalLabelX, horizontalLabelY);
+    for (let i = 0; i < chart.data[CHART_CONFIG.ASKS].length; i += 1) {
+      if (isEven(i)) {
+        const horizontalLabelX = chart.width / 2 + i * chart.itemsNum;
+        const horizontalLabelY = chart.height - chart.axisRatio;
+        const index = chart.data[CHART_CONFIG.ASKS].length - i - 1;
+        const label = chart.data[CHART_CONFIG.ASKS][index][0];
+        chart.context.fillText(label, horizontalLabelX, horizontalLabelY);
+      }
     }
   }
 
@@ -117,7 +124,7 @@ export class CryptoChart {
     chart.context.strokeStyle = chart.guidelineColor;
     chart.context.lineWidth = chart.guidelineWidth;
     chart.context.setLineDash(chart.lineDash);
-    for (let i = 0; i <= chart.itemsNum; i++) {
+    for (let i = 0; i <= chart.itemsNum; i += 1) {
       const verticalGuidelineStartX = chart.width - i * chart.itemsNum;
       const verticalGuidelineStartY = 0;
       const verticalGuidelineEndX = chart.width - i * chart.itemsNum;
@@ -131,46 +138,55 @@ export class CryptoChart {
 
   drawDepthChart(orderType) {
     const chart = this;
-    const opaque = 0.1;
-    const getColour = (type, opacity) => (type === bid ? `rgb(0, 185, 9, ${opacity})` : `rgb(198, 6, 6, ${opacity})`);
-
     const scaleWidth = chart.width / 2 / (chart.itemsNum / 2);
-    const typePosition = 3;
     chart.context.beginPath();
     chart.context.moveTo(chart.width / 2, chart.height);
 
     if (orderType === bid) {
-      for (const i in chart.data[CHART_CONFIG.BIDS]) {
-        chart.context.fillStyle = getColour(chart.data[CHART_CONFIG.BIDS][i][typePosition], opaque);
-        chart.context.strokeStyle = getColour(chart.data[CHART_CONFIG.BIDS][i][typePosition], 1);
-        chart.context.stroke();
-        const x = chart.width / 2 - i * scaleWidth;
-        const y = chart.height - chart.data[CHART_CONFIG.BIDS][i][2] / chart.maxValue * chart.height;
-        chart.context.lineTo(x, y);
-      }
+      chart.drawBids(scaleWidth);
+      chart.context.lineTo(0, 0);
+      chart.context.lineTo(0, chart.height);
     } else if (orderType === ask) {
-      for (const i in chart.data[CHART_CONFIG.ASKS]) {
-        chart.context.fillStyle = getColour(chart.data[CHART_CONFIG.ASKS][i][typePosition], opaque);
-        chart.context.strokeStyle = getColour(chart.data[CHART_CONFIG.ASKS][i][typePosition], 1);
-        chart.context.stroke();
-        const index = chart.data[CHART_CONFIG.ASKS].length - i - 1;
-        const x = chart.width / 2 + i * scaleWidth;
-        const y = chart.height - chart.data[CHART_CONFIG.ASKS][index][2] / chart.maxValue * chart.height;
-        chart.context.lineTo(x, y);
-      }
+      chart.drawAsks(scaleWidth);
+      chart.context.lineTo(chart.width, 0);
+      chart.context.lineTo(chart.width, chart.height);
     }
 
-    chart.context.lineTo(orderType === bid ? 0 : chart.width, 0);
-    chart.context.lineTo(orderType === bid ? 0 : chart.width, chart.height);
     chart.context.lineTo(chart.width / 2, chart.height);
     chart.context.fill();
     chart.context.closePath();
   }
 
+  drawAsks(scaleWidth) {
+    const chart = this;
+    for (let i = 0; i < chart.data[CHART_CONFIG.ASKS].length; i += 1) {
+      const index = chart.data[CHART_CONFIG.ASKS].length - i - 1;
+      const totalAsks = chart.data[CHART_CONFIG.ASKS][index][2];
+      chart.context.fillStyle = `rgb(${chart.askRgbColor}, ${chart.fillOpacity})`;
+      chart.context.strokeStyle = `rgb(${chart.askRgbColor}, ${chart.lineOpacity})`;
+      chart.context.stroke();
+      const x = chart.width / 2 + i * scaleWidth;
+      const y = chart.height - totalAsks / chart.maxValue * chart.height;
+      chart.context.lineTo(x, y);
+    }
+  }
+
+  drawBids(scaleWidth) {
+    const chart = this;
+    for (let i = 0; i < chart.data[CHART_CONFIG.BIDS].length; i += 1) {
+      const totalBids = chart.data[CHART_CONFIG.BIDS][i][2];
+      chart.context.fillStyle = `rgb(${chart.bidRgbColor}, ${chart.fillOpacity})`;
+      chart.context.strokeStyle = `rgb(${chart.bidRgbColor}, ${chart.lineOpacity})`;
+      chart.context.stroke();
+      const x = chart.width / 2 - i * scaleWidth;
+      const y = chart.height - totalBids / chart.maxValue * chart.height;
+      chart.context.lineTo(x, y);
+    }
+  }
+
   handleMouseEvents() {
     const chart = this;
-    // This is not an accurate price
-    // its a best guess of hte value closest to the mouse
+    // This is not an accurate price its a best guess of the value closest to the mouse
     const guessPrice = mousePosX => {
       const pixelsPerElement = chart.width / chart.itemsNum;
       const approxPriceArrayPosition = chart.itemsNum - (mousePosX / pixelsPerElement).toFixed(0);
