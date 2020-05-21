@@ -72,7 +72,10 @@ export class CryptoChart {
     const chart = this;
     chart.itemsNum = chart.values.length;
     if (chart.itemsNum > 0) {
-      chart.maxValue = Math.max(chart.data[CHART_CONFIG.ASKS][0][2], chart.data[CHART_CONFIG.BIDS][chart.data[CHART_CONFIG.BIDS].length - 1][2]);
+      const asksTotal = chart.data[CHART_CONFIG.ASKS][0][2];
+      const bidsLength = chart.data[CHART_CONFIG.BIDS].length;
+      const bidsTotal = chart.data[CHART_CONFIG.BIDS][bidsLength - 1][2];
+      chart.maxValue = Math.max(asksTotal, bidsTotal);
     }
   }
 

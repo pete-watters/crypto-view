@@ -35,6 +35,7 @@
       "semi": ["error", "always"],
       "no-shadow": 2,
       "no-unused-vars": 2,
+      "no-bitwise": 0,
       "object-property-newline": ["error", { "allowMultiplePropertiesPerLine": true }],
       "no-trailing-spaces": 2,
       "no-param-reassign": 0,

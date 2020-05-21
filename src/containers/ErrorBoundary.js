@@ -6,10 +6,10 @@ class ErrorBoundary extends PureComponent {
   constructor(props) {
     super(props);
     this.state = { error: null };
-    this.onRetryClick = this.onRetryClick.bind(this);
   }
+
   onRetryClick() {
-    window.location.reload();
+    window.location.reload(this);
   }
 
   componentDidCatch(error) {
