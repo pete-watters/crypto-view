@@ -4,6 +4,8 @@ This application allows users to visualise live crypto trades.
 
 It's built as a lightweight mobile first webapp. 
 
+View it live [https://crypto-view-377cc.web.app/](https://crypto-view-377cc.web.app/)
+
 
 ## Install
 Clone this repo locally and run
